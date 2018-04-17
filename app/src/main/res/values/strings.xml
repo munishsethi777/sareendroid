@@ -20,4 +20,11 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="title_activity_create_inventory">CreateInventory</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_inventory_list">inventories</string>
+    <string name="title_inventory_detail">inventory Detail</string>
+    <string name="title_activity_inventory_list">InventoryList</string>
+    <string name="title_activity_inventory_details">InventoryDetails</string>
+    <string name="title_activity_inventory_filter">InventoryFilterActivity</string>
 </resources>

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ff9100</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#01ace6</color>
+    <color name="colorPrimaryDark">#787878</color>
     <color name="colorAccent">#FF4081</color>
     <color name="loginSignup1colorAccent">#fe5824</color>
     <color name="OrangeMain">#ff9100</color>
     <color name="bg_relative">#c2ffffff</color>
+    <color name="details_header">#a52da6fc</color>
+    <color name="details_text">#6b6b6b</color>
 </resources>
