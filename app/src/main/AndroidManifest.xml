@@ -27,12 +27,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".LoginActivity" />
         <activity
             android:name=".DashboardActivity"
             android:label="@string/title_activity_dashboard"
@@ -60,14 +55,31 @@
             android:name=".InventoryList"
             android:label="@string/title_activity_inventory_list"
             android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".InventoryDetails"
             android:label="@string/title_activity_inventory_details"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".InventoryFilterActivity"
             android:label="@string/title_activity_inventory_filter"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CreateEnquiryActivity"
+            android:label="@string/title_activity_create_enquiry"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".EnquiryList"
+            android:label="@string/title_activity_enquiry_list"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".EnquiryDetails"
+            android:label="@string/title_activity_enquiry_details"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

@@ -27,4 +27,7 @@
     <string name="title_activity_inventory_list">InventoryList</string>
     <string name="title_activity_inventory_details">InventoryDetails</string>
     <string name="title_activity_inventory_filter">InventoryFilterActivity</string>
+    <string name="title_activity_create_enquiry">CreateEnquiryActivity</string>
+    <string name="title_activity_enquiry_list">EnquiryList</string>
+    <string name="title_activity_enquiry_details">EnquiryDetails</string>
 </resources>

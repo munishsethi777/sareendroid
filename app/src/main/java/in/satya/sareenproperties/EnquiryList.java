@@ -1,4 +1,4 @@
-package in.satya.sareenproperties.dummy;
+package in.satya.sareenproperties;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;

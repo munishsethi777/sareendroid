@@ -15,7 +15,8 @@ public class InventoryFilterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inventory_filter);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
     }
 
