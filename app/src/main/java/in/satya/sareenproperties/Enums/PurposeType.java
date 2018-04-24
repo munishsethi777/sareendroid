@@ -15,4 +15,11 @@ public enum PurposeType {
     @Override public String toString(){
         return purposeType;
     }
+
+    public static String getNameByValue(String code){
+        for(PurposeType e : PurposeType.values()){
+            if(code == e.toString()) return e.name();
+        }
+        return null;
+    }
 }

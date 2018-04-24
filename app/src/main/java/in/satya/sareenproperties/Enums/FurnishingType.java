@@ -13,4 +13,11 @@ public enum FurnishingType {
     @Override public String toString(){
         return furnishingType;
     }
+
+    public static String getNameByValue(String code){
+        for(FurnishingType e : FurnishingType.values()){
+            if(code == e.toString()) return e.name();
+        }
+        return null;
+    }
 }

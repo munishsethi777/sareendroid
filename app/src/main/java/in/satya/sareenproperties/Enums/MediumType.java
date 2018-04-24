@@ -15,4 +15,11 @@ public enum MediumType {
     @Override public String toString(){
         return mediumType;
     }
+
+    public static String getNameByValue(String code){
+        for(MediumType e : MediumType.values()){
+            if(code == e.toString()) return e.name();
+        }
+        return null;
+    }
 }

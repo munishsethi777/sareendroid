@@ -18,4 +18,11 @@ public enum PropertyUnit {
     @Override public String toString(){
         return propertyUnit;
     }
+
+    public static String getNameByValue(String code){
+        for(PropertyUnit e : PropertyUnit.values()){
+            if(code == e.toString()) return e.name();
+        }
+        return null;
+    }
 }
