@@ -16,6 +16,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -90,7 +91,7 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
 
     private Spinner spinner_property_type;
     private Spinner spinner_purpose;
-    private Spinner spinner_medium;
+    public Spinner spinner_medium;
     private Spinner spinner_offer;
     private ServiceHandler mAuthTask = null;
 
@@ -100,6 +101,11 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
     public Spinner spinner_rate_factor;
     public EditText textView_expected_amount;
 
+    //medium
+    public LinearLayout mediumDetailLayout;
+    private EditText editText_medium_name;
+    private EditText editText_medium_phone;
+    private EditText editText_medium_address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,6 +153,12 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
         propertyArea = (EditText)findViewById(R.id.propertyarea);
         length = (EditText)findViewById(R.id.dimensionlength);
         breadth = (EditText)findViewById(R.id.dimensionbreadth);
+
+        //medium Detail
+        mediumDetailLayout = (LinearLayout)findViewById(R.id.medium_layout);
+        editText_medium_name = (EditText)findViewById(R.id.mediumname);
+        editText_medium_address = (EditText)findViewById(R.id.mediumaddress);
+        editText_medium_phone = (EditText)findViewById(R.id.mediumphone);
         buildSpinners();
     }
 
@@ -241,7 +253,7 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
                 new ArrayAdapter<MediumType>(this,
                         android.R.layout.simple_spinner_item,
                         MediumType.values()));
-
+        spinner_medium.setOnItemSelectedListener(new mediumSpinnerChangeListener(this));
         spinner_offer.setAdapter(
                 new ArrayAdapter<PropertyOfferType>(this,
                         android.R.layout.simple_spinner_item,
@@ -333,7 +345,10 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
                 URLEncoder.encode("2222", "UTF-8"),
                 URLEncoder.encode(specification.getText().toString(), "UTF-8"),
                 URLEncoder.encode(purposeType, "UTF-8"),
-                1};
+                1,
+                URLEncoder.encode(editText_medium_name.getText().toString(), "UTF-8"),
+                URLEncoder.encode(editText_medium_address.getText().toString(), "UTF-8"),
+                URLEncoder.encode(editText_medium_phone.getText().toString(), "UTF-8")};
         String dashboardCountUrl = MessageFormat.format(StringConstants.SAVE_INVENTORY,args);
         mAuthTask = new ServiceHandler(dashboardCountUrl,this,this);
         mAuthTask.execute();
@@ -387,11 +402,36 @@ class spinnerChangeListener implements AdapterView.OnItemSelectedListener{
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        int cr = Integer.parseInt(activity.spinner_crores.getSelectedItem().toString()) * 10000000;
-        int lk = Integer.parseInt(activity.spinner_lakhs.getSelectedItem().toString()) * 100000;
-        int th = Integer.parseInt(activity.spinner_thousands.getSelectedItem().toString()) * 1000;
-        Integer total = cr + lk + th;
-        activity.textView_expected_amount.setText(total.toString());
+       String medium = activity.spinner_medium.getSelectedItem().toString();
+       if(!medium.equals(MediumType.direct)){
+           int cr = Integer.parseInt(activity.spinner_crores.getSelectedItem().toString()) * 10000000;
+           int lk = Integer.parseInt(activity.spinner_lakhs.getSelectedItem().toString()) * 100000;
+           int th = Integer.parseInt(activity.spinner_thousands.getSelectedItem().toString()) * 1000;
+           Integer total = cr + lk + th;
+           activity.textView_expected_amount.setText(total.toString());
+       }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+}
+
+class mediumSpinnerChangeListener implements AdapterView.OnItemSelectedListener{
+    CreateInventory activity;
+    public mediumSpinnerChangeListener(CreateInventory activity){
+        this.activity = activity;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        String medium = this.activity.spinner_medium.getSelectedItem().toString();
+        if(!medium.equals(MediumType.direct.toString())){
+            this.activity.mediumDetailLayout.setVisibility(View.VISIBLE);
+        }else{
+            this.activity.mediumDetailLayout.setVisibility(View.GONE);
+        }
     }
 
     @Override
