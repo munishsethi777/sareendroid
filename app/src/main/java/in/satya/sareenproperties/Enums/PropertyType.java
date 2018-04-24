@@ -59,4 +59,11 @@ public enum PropertyType {
            return propertyType;
        }
 
+    public static String getNameByValue(String code){
+        for(PropertyType e : PropertyType.values()){
+            if(code == e.toString()) return e.name();
+        }
+        return null;
+    }
+
 }

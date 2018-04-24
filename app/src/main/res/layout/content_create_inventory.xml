@@ -49,7 +49,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
                         <EditText
-                            android:id="@+id/contect_mobile"
+                            android:id="@+id/contact_mobile"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Mobile"
@@ -199,7 +199,45 @@
                 </LinearLayout>
 
             </LinearLayout>
-
+            <LinearLayout
+                android:id="@+id/medium_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:orientation="vertical">
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/mediumname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Medium Name"
+                        style="@style/formInput"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/mediumphone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Medium Phone"
+                        android:lines="3"
+                        style="@style/formInput"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/mediumaddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Medium Address"
+                        android:lines="3"
+                        style="@style/formInput"/>
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -489,19 +527,19 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <Spinner
-                        android:id="@+id/crores"
+                        android:id="@+id/spinner_crores"
                         style="@style/formInput"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"/>
                     <Spinner
-                        android:id="@+id/lakhs"
+                        android:id="@+id/spinner_lakhs"
                         style="@style/formInput"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"/>
                     <Spinner
-                        android:id="@+id/thousands"
+                        android:id="@+id/spinner_thousands"
                         style="@style/formInput"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -543,7 +581,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="PropertyType"
+                        android:text="Rate Factor"
                         style="@style/spinnerHeader"
                         android:paddingBottom="8dp"
                         android:paddingLeft="2dp"/>
@@ -567,9 +605,6 @@
                     </EditText>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
-
-
-
         </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

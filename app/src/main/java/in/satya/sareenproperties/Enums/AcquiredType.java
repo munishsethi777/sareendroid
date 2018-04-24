@@ -11,4 +11,11 @@ public enum AcquiredType {
     @Override public String toString(){
         return purposeType;
     }
+
+    public static String getNameByValue(String code){
+        for(AcquiredType e : AcquiredType.values()){
+            if(code == e.toString()) return e.name();
+        }
+        return null;
+    }
 }

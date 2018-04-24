@@ -19,4 +19,11 @@ public enum FacingType {
     @Override public String toString(){
         return facingType;
     }
+
+    public static String getNameByValue(String code){
+        for(FacingType e : FacingType.values()){
+            if(code == e.toString()) return e.name();
+        }
+        return null;
+    }
 }

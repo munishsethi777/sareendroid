@@ -20,4 +20,11 @@ public enum DocumentType {
     @Override public String toString(){
         return documentType;
     }
+
+    public static String getNameByValue(String code){
+        for(DocumentType e : DocumentType.values()){
+            if(code == e.toString()) return e.name();
+        }
+        return null;
+    }
 }

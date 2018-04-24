@@ -17,4 +17,11 @@ public enum ApprovalType {
     @Override public String toString(){
         return approvalType;
     }
+
+    public static String getNameByValue(String code){
+        for(ApprovalType e : ApprovalType.values()){
+            if(code == e.toString()) return e.name();
+        }
+        return null;
+    }
 }

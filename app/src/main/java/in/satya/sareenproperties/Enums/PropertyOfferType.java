@@ -14,4 +14,13 @@ public enum PropertyOfferType {
     @Override public String toString(){
         return propertyOfferType;
     }
+
+    public static String getNameByValue(String code){
+        for(PropertyOfferType e : PropertyOfferType.values()){
+            if(code == e.toString()) return e.name();
+        }
+        return null;
+    }
+
+
 }

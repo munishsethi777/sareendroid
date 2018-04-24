@@ -16,4 +16,11 @@ public enum PropertySideType {
     @Override public String toString(){
         return propertySideType;
     }
+
+    public static String getNameByValue(String code){
+        for(PropertySideType e : PropertySideType.values()){
+            if(code == e.toString()) return e.name();
+        }
+        return null;
+    }
 }
