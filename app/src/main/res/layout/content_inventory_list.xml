@@ -7,57 +7,16 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".InventoryList"
     tools:showIn="@layout/activity_inventory_list">
-    <LinearLayout
+    <ScrollView
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:padding="5dp"
-        android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="6"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingLeft="5dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Old House/Plot - 400 sq-yrds"
-                    android:textSize="17dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="314 Palam Vihar, Pakhowal Road."/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sanjay Sood - 9814012345"
-                    android:layout_marginTop="4dp"/>
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical">
-                <ImageButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ico_right_50"/>
-
-            </LinearLayout>
-    </LinearLayout>
-
-
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/layout_inventory_list"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </LinearLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

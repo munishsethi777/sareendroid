@@ -15,6 +15,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                         <ImageView
+                            android:id="@+id/details_imageView"
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
                             android:src="@mipmap/building"/>
@@ -30,6 +31,7 @@
                                     android:orientation="vertical"
                                     android:layout_weight="8">
                                     <TextView
+                                        android:id="@+id/textview_property_type"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:text="House/Villa 400 sq-yrds"
@@ -37,12 +39,14 @@
                                         android:textColor="@android:color/white"
                                         android:layout_marginBottom="5dp"/>
                                     <TextView
+                                        android:id="@+id/textview_contact_detail"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:text="Sanjay Sood - 9814600356"
                                         android:textSize="13dp"
                                         android:textColor="@android:color/white"/>
                                     <TextView
+                                        android:id="@+id/textview_address"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:text="314 Palam Vihar, Pakhowal Road, Ludhiana."
