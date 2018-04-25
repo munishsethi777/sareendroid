@@ -45,21 +45,13 @@ public class InventoryList extends AppCompatActivity implements IServiceHandler 
         setContentView(R.layout.activity_inventory_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-    }
-
-
-        ImageButton filterBtn = (ImageButton)findViewById(R.id.inventoryFilterButton);
-        filterBtn.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                openFilter();       //put your intent code here
-            }
-        });
         layout_inventory_List = (LinearLayout)findViewById(R.id.layout_inventory_list) ;
         layoutHelper = new LayoutHelper(this);
         executeGetInventoryListCal();
+    }
+
+
+
 
 
     @Override
