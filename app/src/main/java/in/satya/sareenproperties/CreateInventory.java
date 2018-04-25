@@ -146,7 +146,7 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
         specification = (EditText)findViewById(R.id.specifications);
 
         //Pricing
-        totalAmount = (EditText)findViewById(R.id.expectedAmount) ;
+        totalAmount = (EditText)findViewById(R.id.expectedAmount);
         rate = (EditText)findViewById(R.id.rate);
 
         //Property Area
@@ -178,11 +178,11 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
              LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
              Criteria criteria = new Criteria();
              String bestProvider = locationManager.getBestProvider(criteria, true);
-//             Location location = locationManager.getLastKnownLocation(bestProvider);
-//             if (location != null) {
-//                 onLocationChanged(location);
-//             }
-//             locationManager.requestLocationUpdates(bestProvider, 20000, 0, this);
+             Location location = locationManager.getLastKnownLocation(bestProvider);
+             if (location != null) {
+                 onLocationChanged(location);
+             }
+             locationManager.requestLocationUpdates(bestProvider, 20000, 0, this);
          }catch (SecurityException se){
 
          }
