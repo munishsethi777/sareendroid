@@ -177,12 +177,12 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
          try{
              LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
              Criteria criteria = new Criteria();
-//             String bestProvider = locationManager.getBestProvider(criteria, true);
-//             Location location = locationManager.getLastKnownLocation(bestProvider);
-//             if (location != null) {
-//                 onLocationChanged(location);
-//             }
-//             locationManager.requestLocationUpdates(bestProvider, 20000, 0, this);
+             String bestProvider = locationManager.getBestProvider(criteria, true);
+             Location location = locationManager.getLastKnownLocation(bestProvider);
+             if (location != null) {
+                 onLocationChanged(location);
+             }
+             locationManager.requestLocationUpdates(bestProvider, 20000, 0, this);
          }catch (SecurityException se){
 
          }
