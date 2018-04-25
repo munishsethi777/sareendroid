@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="inventoryListSorting">
+        <item>Property Type</item>
+        <item>Facing</item>
+        <item>Sintel</item>
+        <item>Tears of Steel</item>
+    </string-array>
+
+
+</resources>

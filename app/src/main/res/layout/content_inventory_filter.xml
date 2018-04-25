@@ -26,6 +26,7 @@
                         android:text="TYPE"
                         style="@style/formTitle"/>
                     <Spinner
+                        android:id="@+id/propertytype"
                         android:layout_width="0dp"
                         android:layout_weight="3"
                         android:layout_height="wrap_content">
@@ -48,6 +49,7 @@
                     android:text="PURPOSE"
                     style="@style/formTitle"/>
                 <Spinner
+                    android:id="@+id/purpose"
                     android:layout_width="0dp"
                     android:layout_weight="3"
                     android:layout_height="wrap_content">
@@ -71,6 +73,7 @@
                     android:text="MEDIUM"
                     style="@style/formTitle"/>
                 <Spinner
+                    android:id="@+id/medium"
                     android:layout_width="0dp"
                     android:layout_weight="3"
                     android:layout_height="wrap_content">
@@ -94,6 +97,7 @@
                     android:text="FACING"
                     style="@style/formTitle"/>
                 <Spinner
+                    android:id="@+id/facing"
                     android:layout_width="0dp"
                     android:layout_weight="3"
                     android:layout_height="wrap_content">
@@ -117,6 +121,7 @@
                     android:text="ADDRESS"
                     style="@style/formTitle"/>
                 <EditText
+                    android:id="@+id/address"
                     android:layout_width="0dp"
                     android:layout_weight="3"
                     android:layout_height="wrap_content"
@@ -140,6 +145,7 @@
                     android:text="AMOUNT"
                     style="@style/formTitle"/>
                 <EditText
+                    android:id="@+id/amountFrom"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -154,6 +160,7 @@
                     android:textAlignment="center"
                     style="@style/formTitle"/>
                 <EditText
+                    android:id="amountTo"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
