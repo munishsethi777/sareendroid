@@ -1,7 +1,7 @@
 package in.satya.sareenproperties.Enums;
 
 public enum PropertySideType {
-
+    selectAny("Select Any"),
     singleSideOpen("Single Side Open"),
 	corner("Corner"),
 	twoSideOpen("Two Side Open"),
@@ -18,6 +18,9 @@ public enum PropertySideType {
     }
 
     public static String getNameByValue(String code){
+        if(code.equals(PropertySideType.selectAny.toString())){
+            return "";
+        }
         for(PropertySideType e : PropertySideType.values()){
             if(code == e.toString()) return e.name();
         }

@@ -1,7 +1,7 @@
 package in.satya.sareenproperties.Enums;
 
 public enum RateFactorType {
-
+    selectAny("Select Any"),
     negotiable("Negotiable"),
 	nonNegotiable("Non Negotiable");
 
@@ -17,6 +17,9 @@ public enum RateFactorType {
 
 
     public static String getNameByValue(String code){
+        if(code.equals(RateFactorType.selectAny.toString())){
+            return "";
+        }
         for(RateFactorType e : RateFactorType.values()){
             if(code == e.toString()) return e.name();
         }

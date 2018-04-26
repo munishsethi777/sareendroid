@@ -14,6 +14,7 @@ import android.widget.Toast;
 import org.json.JSONObject;
 
 import java.text.MessageFormat;
+import java.util.Date;
 
 import in.satya.sareenproperties.Enums.DocumentType;
 import in.satya.sareenproperties.Enums.FacingType;
@@ -23,6 +24,7 @@ import in.satya.sareenproperties.Enums.PropertyUnit;
 import in.satya.sareenproperties.Enums.PurposeType;
 import in.satya.sareenproperties.services.Interface.IServiceHandler;
 import in.satya.sareenproperties.services.ServiceHandler;
+import in.satya.sareenproperties.utils.DateUtil;
 import in.satya.sareenproperties.utils.LayoutHelper;
 import in.satya.sareenproperties.utils.StringConstants;
 
@@ -146,7 +148,11 @@ public class InventoryDetails extends AppCompatActivity implements IServiceHandl
                 String contactAddress = inventoryJson.getString("contactaddress");
                 String imagepath = inventoryJson.getString("imagepath");
                 String createdOn = inventoryJson.getString("createdon");
+                Date createdDate = DateUtil.stringToDate(createdOn);
+                createdOn = DateUtil.dateToFormat(createdDate,DateUtil.format);
                 String modifiedOn = inventoryJson.getString("lastmodifiedon");
+                Date lastModifiedOn = DateUtil.stringToDate(modifiedOn);
+                modifiedOn = DateUtil.dateToFormat(lastModifiedOn,DateUtil.format);
                 String medium = inventoryJson.getString("medium");
                 medium = MediumType.valueOf(medium).toString();
                 String plotNumber = inventoryJson.getString("plotnumber");
@@ -185,7 +191,7 @@ public class InventoryDetails extends AppCompatActivity implements IServiceHandl
                 textView_city.setText(city);
                 textView_landmark.setText(landMark);
                 textView_area.setText(area + " " + unit);
-                textView_dimensions.setText(dimensionLength + " x " + dimensionBreadth + unit);
+                textView_dimensions.setText(dimensionLength + " x " + dimensionBreadth + " " + unit);
                 textView_facing.setText(facing);
                 textView_document.setText(documentation);
                 textView_contact_name.setText(contactPerson);

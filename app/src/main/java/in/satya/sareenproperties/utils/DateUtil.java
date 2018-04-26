@@ -1,4 +1,4 @@
-package in.learntech.rights.utils;
+package in.satya.sareenproperties.utils;
 
 import java.text.Format;
 import java.text.ParseException;
@@ -40,7 +40,7 @@ public class DateUtil {
         return s;
     }
 
-    public static String dateToFormat(Date date,String format){
+    public static String dateToFormat(Date date, String format){
         Format formatter = new SimpleDateFormat(format);
         String s = formatter.format(date);
         return s;

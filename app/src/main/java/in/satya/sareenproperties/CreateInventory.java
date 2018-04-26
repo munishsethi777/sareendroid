@@ -1,24 +1,24 @@
 package in.satya.sareenproperties;
 
-import android.app.Activity;
-import android.location.Criteria;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Telephony;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -32,8 +32,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.net.URLEncoder;
-import java.sql.Connection;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -106,7 +106,9 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
     private EditText editText_medium_name;
     private EditText editText_medium_phone;
     private EditText editText_medium_address;
-
+    public static final int GET_FROM_GALLERY = 3;
+    private Bitmap propertyImageBitMap;
+    private ImageView imageView_property_image;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -159,6 +161,8 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
         editText_medium_name = (EditText)findViewById(R.id.mediumname);
         editText_medium_address = (EditText)findViewById(R.id.mediumaddress);
         editText_medium_phone = (EditText)findViewById(R.id.mediumphone);
+
+        imageView_property_image = (ImageView)findViewById(R.id.property_image);
         buildSpinners();
     }
 
@@ -176,13 +180,13 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
         });
          try{
              LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-             Criteria criteria = new Criteria();
-             String bestProvider = locationManager.getBestProvider(criteria, true);
-             Location location = locationManager.getLastKnownLocation(bestProvider);
-             if (location != null) {
-                 onLocationChanged(location);
-             }
-             locationManager.requestLocationUpdates(bestProvider, 20000, 0, this);
+            // Criteria criteria = new Criteria();
+            // String bestProvider = locationManager.getBestProvider(criteria, true);
+            // Location location = locationManager.getLastKnownLocation(bestProvider);
+//             if (location != null) {
+//                 onLocationChanged(location);
+//             }
+//             locationManager.requestLocationUpdates(bestProvider, 20000, 0, this);
          }catch (SecurityException se){
 
          }
@@ -307,51 +311,86 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
 
 
     private void saveInventory()throws Exception{
-        String propertyType = PropertyType.getNameByValue(spinner_property_type.getSelectedItem().toString());
-        String medium = MediumType.getNameByValue(spinner_medium.getSelectedItem().toString());
-        String offer = PropertyOfferType.getNameByValue(spinner_offer.getSelectedItem().toString());
-        String propertyUnit = PropertyUnit.getNameByValue(spinner_property_Unit.getSelectedItem().toString());
-        String facing  = FacingType.getNameByValue(spinner_facing.getSelectedItem().toString());
-        String documentType  = DocumentType.getNameByValue(spinner_document_type.getSelectedItem().toString());
-        String propertySide = PropertySideType.getNameByValue(spinner_property_side.getSelectedItem().toString());
-        String rateFactor = RateFactorType.getNameByValue(spinner_rate_factor.getSelectedItem().toString());
-        String purposeType = PurposeType.getNameByValue(spinner_purpose.getSelectedItem().toString());
-        Object[] args = {URLEncoder.encode(contact_name.getText().toString(), "UTF-8"),
-                URLEncoder.encode(contact_mobile.getText().toString(), "UTF-8"),
-                URLEncoder.encode(refferedBy.getText().toString(), "UTF-8"),
-                URLEncoder.encode(contact_address.getText().toString(), "UTF-8"),
-                URLEncoder.encode(organisation.getText().toString(), "UTF-8"),
-                URLEncoder.encode(propertyType, "UTF-8"),
-                URLEncoder.encode(medium, "UTF-8"),
-                URLEncoder.encode(offer, "UTF-8"),
-                URLEncoder.encode(plotNo.getText().toString(), "UTF-8"),
-                URLEncoder.encode(address1.getText().toString(), "UTF-8"),
-                URLEncoder.encode(address2.getText().toString(), "UTF-8"),
-                URLEncoder.encode(city.getText().toString(), "UTF-8"),
-                URLEncoder.encode(landmark.getText().toString(), "UTF-8"),
-                URLEncoder.encode(propertyArea.getText().toString(), "UTF-8"),
-                URLEncoder.encode(propertyUnit, "UTF-8"),
-                URLEncoder.encode(length.getText().toString(), "UTF-8"),
-                URLEncoder.encode(breadth.getText().toString(), "UTF-8"),
-                URLEncoder.encode(facing, "UTF-8"),
-                URLEncoder.encode(documentType, "UTF-8"),
-                URLEncoder.encode(time.getText().toString(), "UTF-8"),
-                URLEncoder.encode(time.getText().toString(), "UTF-8"),
-                URLEncoder.encode(propertySide, "UTF-8"),
-                URLEncoder.encode(textView_expected_amount.getText().toString(), "UTF-8"),
-                URLEncoder.encode(rate.getText().toString(), "UTF-8"),
-                URLEncoder.encode(rateFactor, "UTF-8"),
-                URLEncoder.encode("1111", "UTF-8"),
-                URLEncoder.encode("2222", "UTF-8"),
-                URLEncoder.encode(specification.getText().toString(), "UTF-8"),
-                URLEncoder.encode(purposeType, "UTF-8"),
-                1,
-                URLEncoder.encode(editText_medium_name.getText().toString(), "UTF-8"),
-                URLEncoder.encode(editText_medium_address.getText().toString(), "UTF-8"),
-                URLEncoder.encode(editText_medium_phone.getText().toString(), "UTF-8")};
-        String dashboardCountUrl = MessageFormat.format(StringConstants.SAVE_INVENTORY,args);
-        mAuthTask = new ServiceHandler(dashboardCountUrl,this,this);
-        mAuthTask.execute();
+        contact_name.setError(null);
+        contact_mobile.setError(null);
+        address1.setError(null);
+        // Store values at the time of the login attempt.
+        String username = contact_name.getText().toString();
+        String mobile = contact_mobile.getText().toString();
+        String address = address1.getText().toString();
+
+        boolean cancel = false;
+        View focusView = null;
+
+        // Check for a valid password, if the user entered one.
+        if (TextUtils.isEmpty(username)) {
+            contact_name.setError(getString(R.string.error_field_required));
+            focusView = contact_name;
+            cancel = true;
+        }
+        if (TextUtils.isEmpty(mobile)) {
+            contact_mobile.setError(getString(R.string.error_field_required));
+            focusView = contact_mobile;
+            cancel = true;
+        }
+        if (TextUtils.isEmpty(address)) {
+            address1.setError(getString(R.string.error_field_required));
+            focusView = address1;
+            cancel = true;
+        }
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+        } else {
+            String propertyType = PropertyType.getNameByValue(spinner_property_type.getSelectedItem().toString());
+            String medium = MediumType.getNameByValue(spinner_medium.getSelectedItem().toString());
+            String offer = PropertyOfferType.getNameByValue(spinner_offer.getSelectedItem().toString());
+            String propertyUnit = PropertyUnit.getNameByValue(spinner_property_Unit.getSelectedItem().toString());
+            String facing  = FacingType.getNameByValue(spinner_facing.getSelectedItem().toString());
+            String documentType  = DocumentType.getNameByValue(spinner_document_type.getSelectedItem().toString());
+            String propertySide = PropertySideType.getNameByValue(spinner_property_side.getSelectedItem().toString());
+            String rateFactor = RateFactorType.getNameByValue(spinner_rate_factor.getSelectedItem().toString());
+            String purposeType = PurposeType.getNameByValue(spinner_purpose.getSelectedItem().toString());
+            Object[] args = {URLEncoder.encode(contact_name.getText().toString(), "UTF-8"),
+                    URLEncoder.encode(contact_mobile.getText().toString(), "UTF-8"),
+                    URLEncoder.encode(refferedBy.getText().toString(), "UTF-8"),
+                    URLEncoder.encode(contact_address.getText().toString(), "UTF-8"),
+                    URLEncoder.encode(organisation.getText().toString(), "UTF-8"),
+                    URLEncoder.encode(propertyType, "UTF-8"),
+                    URLEncoder.encode(medium, "UTF-8"),
+                    URLEncoder.encode(offer, "UTF-8"),
+                    URLEncoder.encode(plotNo.getText().toString(), "UTF-8"),
+                    URLEncoder.encode(address1.getText().toString(), "UTF-8"),
+                    URLEncoder.encode(address2.getText().toString(), "UTF-8"),
+                    URLEncoder.encode(city.getText().toString(), "UTF-8"),
+                    URLEncoder.encode(landmark.getText().toString(), "UTF-8"),
+                    URLEncoder.encode(propertyArea.getText().toString(), "UTF-8"),
+                    URLEncoder.encode(propertyUnit, "UTF-8"),
+                    URLEncoder.encode(length.getText().toString(), "UTF-8"),
+                    URLEncoder.encode(breadth.getText().toString(), "UTF-8"),
+                    URLEncoder.encode(facing, "UTF-8"),
+                    URLEncoder.encode(documentType, "UTF-8"),
+                    URLEncoder.encode(time.getText().toString(), "UTF-8"),
+                    URLEncoder.encode(time.getText().toString(), "UTF-8"),
+                    URLEncoder.encode(propertySide, "UTF-8"),
+                    URLEncoder.encode(textView_expected_amount.getText().toString(), "UTF-8"),
+                    URLEncoder.encode(rate.getText().toString(), "UTF-8"),
+                    URLEncoder.encode(rateFactor, "UTF-8"),
+                    URLEncoder.encode("1111", "UTF-8"),
+                    URLEncoder.encode("2222", "UTF-8"),
+                    URLEncoder.encode(specification.getText().toString(), "UTF-8"),
+                    URLEncoder.encode(purposeType, "UTF-8"),
+                    1,
+                    URLEncoder.encode(editText_medium_name.getText().toString(), "UTF-8"),
+                    URLEncoder.encode(editText_medium_address.getText().toString(), "UTF-8"),
+                    URLEncoder.encode(editText_medium_phone.getText().toString(), "UTF-8")};
+            String dashboardCountUrl = MessageFormat.format(StringConstants.SAVE_INVENTORY,args);
+            mAuthTask = new ServiceHandler(dashboardCountUrl,this,this);
+            mAuthTask.setFileUploadRequest(true);
+            mAuthTask.setBitmap(propertyImageBitMap);
+            mAuthTask.execute();
+        }
     }
 
     @Override
@@ -363,6 +402,8 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
             }catch (Exception e){
                 LayoutHelper.showToast(this,e.getMessage());
             }
+        }else if(id == R.id.upload_imageButton){
+            clickpic();
         }
     }
 
@@ -391,6 +432,26 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
 
     }
 
+    private void clickpic() {
+        // Check Camera
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"),GET_FROM_GALLERY);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == GET_FROM_GALLERY && resultCode == RESULT_OK) {
+            Uri imageUri = data.getData();
+            try {
+                propertyImageBitMap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                imageView_property_image.setImageBitmap(propertyImageBitMap);
+            }catch (IOException e){
+                String message = e.getMessage();
+                Toast.makeText(this,message,Toast.LENGTH_LONG);
+            }
+        }
+    }
 
 
 }

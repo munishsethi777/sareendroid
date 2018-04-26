@@ -1,6 +1,7 @@
 package in.satya.sareenproperties.Enums;
 
 public enum FurnishingType {
+   selectAny("Select Any"),
    finished("Finished"),
    finishFurnished("Finish Furnished");
 
@@ -15,6 +16,9 @@ public enum FurnishingType {
     }
 
     public static String getNameByValue(String code){
+        if(code.equals(FurnishingType.selectAny.toString())){
+            return "";
+        }
         for(FurnishingType e : FurnishingType.values()){
             if(code == e.toString()) return e.name();
         }

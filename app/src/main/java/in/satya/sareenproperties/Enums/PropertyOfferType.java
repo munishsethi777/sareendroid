@@ -1,6 +1,7 @@
 package in.satya.sareenproperties.Enums;
 
 public enum PropertyOfferType {
+    selectAny("Select Any"),
     sale("Sale"),
 	rental("Rental"),
 	tolet("To-Let");
@@ -16,6 +17,9 @@ public enum PropertyOfferType {
     }
 
     public static String getNameByValue(String code){
+        if(code.equals(PropertyOfferType.selectAny.toString())){
+            return "";
+        }
         for(PropertyOfferType e : PropertyOfferType.values()){
             if(code == e.toString()) return e.name();
         }

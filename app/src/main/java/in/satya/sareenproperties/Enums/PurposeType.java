@@ -1,7 +1,7 @@
 package in.satya.sareenproperties.Enums;
 
 public enum PurposeType {
-
+    selectAny("Select Any"),
     residential("Residential"),
 	commercial("Commercial"),
 	industrial("Industrial"),
@@ -17,6 +17,9 @@ public enum PurposeType {
     }
 
     public static String getNameByValue(String code){
+        if(code.equals(PurposeType.selectAny.toString())){
+            return "";
+        }
         for(PurposeType e : PurposeType.values()){
             if(code == e.toString()) return e.name();
         }

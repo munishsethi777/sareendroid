@@ -1,6 +1,7 @@
 package in.satya.sareenproperties.Enums;
 
 public enum PropertyNumberType {
+    selectAny("Select Any"),
     salam("Salam"),
 	mushtarka("Mushtarka"),
 	taksimPossible("Taksim possible"),
@@ -17,6 +18,9 @@ public enum PropertyNumberType {
     }
 
     public static String getNameByValue(String code){
+        if(code.equals(PropertyNumberType.selectAny.toString())){
+            return "";
+        }
         for(PropertyNumberType e : PropertyNumberType.values()){
             if(code == e.toString()) return e.name();
         }

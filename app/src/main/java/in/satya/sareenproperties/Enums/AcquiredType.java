@@ -1,6 +1,7 @@
 package in.satya.sareenproperties.Enums;
 
 public enum AcquiredType {
+    selectAny("Select Any"),
     selfCreated("Self Created"),
 	inherited("Inherited");
     private String purposeType;
@@ -13,6 +14,9 @@ public enum AcquiredType {
     }
 
     public static String getNameByValue(String code){
+        if(code.equals(AcquiredType.selectAny.toString())){
+            return "";
+        }
         for(AcquiredType e : AcquiredType.values()){
             if(code == e.toString()) return e.name();
         }

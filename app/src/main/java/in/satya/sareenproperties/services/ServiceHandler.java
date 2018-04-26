@@ -84,8 +84,8 @@ public class ServiceHandler extends AsyncTask<Void, Void, JSONObject> {
             urlConnection.setRequestMethod("POST");
             urlConnection.setDoOutput(true);
             urlConnection.setDoInput(true);
-            if(isFileUploadRequest){
-                String attachmentName = "imagefile";
+            if(isFileUploadRequest &&  this.bitmap != null){
+                String attachmentName = "inventoryImage";
                 String attachmentFileName = "image.png";
                 String crlf = "\r\n";
                 String twoHyphens = "--";

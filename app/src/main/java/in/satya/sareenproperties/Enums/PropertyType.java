@@ -1,6 +1,6 @@
 package in.satya.sareenproperties.Enums;
 public enum PropertyType {
-
+	   selectAny("Select Any"),
        residentialHouse("House/Villa"),
        residentialOldHouse("Old House/Plot"),
        residentialPlot("Plot/Land"),
@@ -60,6 +60,9 @@ public enum PropertyType {
        }
 
     public static String getNameByValue(String code){
+		if(code.equals(PropertyType.selectAny.toString())){
+			return "";
+		}
         for(PropertyType e : PropertyType.values()){
             if(code == e.toString()) return e.name();
         }

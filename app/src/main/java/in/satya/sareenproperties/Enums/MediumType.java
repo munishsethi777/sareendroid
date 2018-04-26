@@ -1,6 +1,7 @@
 package in.satya.sareenproperties.Enums;
 
 public enum MediumType {
+    selectAny("Select Any"),
     direct("Direct"),
 	broker("Broker"),
 	Relative("Relative"),
@@ -17,6 +18,9 @@ public enum MediumType {
     }
 
     public static String getNameByValue(String code){
+        if(code.equals(MediumType.selectAny.toString())){
+            return "";
+        }
         for(MediumType e : MediumType.values()){
             if(code == e.toString()) return e.name();
         }

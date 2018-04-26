@@ -1,6 +1,7 @@
 package in.satya.sareenproperties.Enums;
 
 public enum DocumentType {
+    selectAny("Select Any"),
     registry("Registry"),
 	agreement("Agreement"),
 	attorney("Attorney"),
@@ -22,6 +23,9 @@ public enum DocumentType {
     }
 
     public static String getNameByValue(String code){
+        if(code.equals(DocumentType.selectAny.toString())){
+            return "";
+        }
         for(DocumentType e : DocumentType.values()){
             if(code == e.toString()) return e.name();
         }

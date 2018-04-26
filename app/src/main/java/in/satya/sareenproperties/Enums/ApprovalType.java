@@ -1,7 +1,7 @@
 package in.satya.sareenproperties.Enums;
 
 public enum ApprovalType {
-
+    selectAny("Select Any"),
     pudaApproved("Puda Approved"),
 	regularised("Regularised"),
 	unapproved("UnApproved"),
@@ -19,6 +19,9 @@ public enum ApprovalType {
     }
 
     public static String getNameByValue(String code){
+        if(code.equals(ApprovalType.selectAny.toString())){
+            return "";
+        }
         for(ApprovalType e : ApprovalType.values()){
             if(code == e.toString()) return e.name();
         }

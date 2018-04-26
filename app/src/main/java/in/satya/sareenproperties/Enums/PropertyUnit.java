@@ -1,6 +1,7 @@
 package in.satya.sareenproperties.Enums;
 
 public enum PropertyUnit {
+    selectAny("Select Any"),
     squareFeet("Sq-ft"),
 	squareYard("Sq-yrd"),
 	squareMeter("Sq-m"),
@@ -20,6 +21,9 @@ public enum PropertyUnit {
     }
 
     public static String getNameByValue(String code){
+        if(code.equals(PropertyUnit.selectAny.toString())){
+            return "";
+        }
         for(PropertyUnit e : PropertyUnit.values()){
             if(code == e.toString()) return e.name();
         }
