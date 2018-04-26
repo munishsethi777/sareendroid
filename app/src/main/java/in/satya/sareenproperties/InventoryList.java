@@ -39,6 +39,7 @@ public class InventoryList extends AppCompatActivity implements IServiceHandler 
     private LinearLayout layout_inventory_List;
     private ServiceHandler mAuthTask = null;
     private LayoutHelper layoutHelper;
+    private String getInventoryUrl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +48,11 @@ public class InventoryList extends AppCompatActivity implements IServiceHandler 
         setSupportActionBar(toolbar);
         layout_inventory_List = (LinearLayout)findViewById(R.id.layout_inventory_list) ;
         layoutHelper = new LayoutHelper(this);
+        Intent intent = getIntent();
+        getInventoryUrl = intent.getStringExtra("filterData");
+        if(getInventoryUrl == null){
+            getInventoryUrl = StringConstants.GET_INVENTORIES;
+        }
         executeGetInventoryListCal();
     }
 
@@ -137,8 +143,7 @@ public class InventoryList extends AppCompatActivity implements IServiceHandler 
         startActivity(detailIntent);
     }
     private void executeGetInventoryListCal(){
-        String getInventoryListUrl =StringConstants.GET_INVENTORIES;
-        mAuthTask = new ServiceHandler(getInventoryListUrl,this,this);
+        mAuthTask = new ServiceHandler(getInventoryUrl,this,this);
         mAuthTask.execute();
     }
 
