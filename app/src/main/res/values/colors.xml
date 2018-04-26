@@ -8,4 +8,5 @@
     <color name="bg_relative">#c2ffffff</color>
     <color name="details_header">#a52da6fc</color>
     <color name="details_text">#6b6b6b</color>
+    <color name="right_profile">#e180A684</color>
 </resources>
