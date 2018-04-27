@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_refresh"
-        android:icon="@drawable/ic_menu_send"
+        android:icon="@drawable/icons_refresh"
         android:title="Filter"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_filter"
-        android:icon="@drawable/ic_filter_icon"
+        android:icon="@drawable/icons_filter"
         android:title="Filter"
         app:showAsAction="ifRoom"/>
 </menu>

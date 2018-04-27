@@ -116,6 +116,7 @@ public class InventoryDetails extends AppCompatActivity implements IServiceHandl
             }
         });
     }
+
     private void populateInventoryDetail(JSONObject response)throws Exception{
         JSONObject inventoryJson = response.getJSONObject("inventory");
         String propertyType = inventoryJson.getString("propertytype");
@@ -232,6 +233,7 @@ public class InventoryDetails extends AppCompatActivity implements IServiceHandl
                 }else if(mCallName.equals(DELETE_INVENTORY)){
                     Intent intent = new Intent(this,InventoryList.class);
                     startActivity(intent);
+                    finish();
                 }
             }
         }catch (Exception e){
@@ -262,8 +264,6 @@ public class InventoryDetails extends AppCompatActivity implements IServiceHandl
                 deleteNote();
                 return true;
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
 
         }

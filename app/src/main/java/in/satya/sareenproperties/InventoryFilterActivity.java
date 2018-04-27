@@ -163,4 +163,10 @@ public class InventoryFilterActivity extends AppCompatActivity implements View.O
     public void setCallName(String call) {
 
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 }

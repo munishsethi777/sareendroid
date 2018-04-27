@@ -46,7 +46,6 @@ public class InventoryList extends AppCompatActivity implements IServiceHandler 
         setContentView(R.layout.activity_inventory_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        layout_inventory_List = (LinearLayout)findViewById(R.id.layout_inventory_list) ;
         layoutHelper = new LayoutHelper(this);
         Intent intent = getIntent();
         getInventoryUrl = intent.getStringExtra("filterData");
@@ -75,8 +74,7 @@ public class InventoryList extends AppCompatActivity implements IServiceHandler 
                 startActivity(intent);
                 return true;
             case R.id.action_refresh:
-                finish();
-                startActivity(new Intent(this, InventoryList.class));
+                executeGetInventoryListCal();
                 return true;
             default:
                 // If we got here, the user's action was not recognized.
@@ -138,6 +136,7 @@ public class InventoryList extends AppCompatActivity implements IServiceHandler 
             });
             layout_inventory_List.addView(fragmentLayout);
         }
+        getInventoryUrl = StringConstants.GET_INVENTORIES;
     }
 
     private void showDetail(int seq){
@@ -146,9 +145,16 @@ public class InventoryList extends AppCompatActivity implements IServiceHandler 
         startActivity(detailIntent);
     }
     private void executeGetInventoryListCal(){
+
+        layout_inventory_List = (LinearLayout)findViewById(R.id.layout_inventory_list) ;
+        layout_inventory_List.removeAllViews();
         mAuthTask = new ServiceHandler(getInventoryUrl,this,this);
         mAuthTask.execute();
     }
 
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
 
 }

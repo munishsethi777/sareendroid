@@ -52,9 +52,10 @@
             android:gravity="center_vertical">
             <ImageButton
                 android:id="@+id/imageview_show_detail"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
+                android:background="#0000"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ico_right_50"/>
+                android:src="@drawable/icons_forward"/>
 
         </LinearLayout>
     </LinearLayout>

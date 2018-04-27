@@ -455,6 +455,7 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
                         detailIntent.putExtra(StringConstants.SEQ,mInventorySeq);
                         startActivity(detailIntent);
                     }else{
+                        finish();
                         Intent listIntent = new Intent(this,InventoryList.class);
                         startActivity(listIntent);
                     }
