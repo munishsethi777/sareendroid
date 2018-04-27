@@ -12,6 +12,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -36,6 +37,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import in.satya.sareenproperties.Enums.ApprovalType;
@@ -50,10 +52,13 @@ import in.satya.sareenproperties.Enums.PurposeType;
 import in.satya.sareenproperties.Enums.RateFactorType;
 import in.satya.sareenproperties.services.Interface.IServiceHandler;
 import in.satya.sareenproperties.services.ServiceHandler;
+import in.satya.sareenproperties.utils.DateUtil;
 import in.satya.sareenproperties.utils.LayoutHelper;
 import in.satya.sareenproperties.utils.StringConstants;
 
 public class CreateInventory extends AppCompatActivity implements IServiceHandler, OnMapReadyCallback, LocationListener,View.OnClickListener {
+    public static final String GET_INVENTORY_DETAIL = "getInventoryDetail";
+    public static final String SAVE_INVENTORY = "SAVE_INVENTORY";
     private GoogleMap mMap;
     private FloatingActionButton fab;
     //USER INFO
@@ -85,7 +90,6 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
     private EditText time;
 
     //Pricing
-    private EditText totalAmount;
     private EditText rate;
     private EditText specification;
 
@@ -109,6 +113,19 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
     public static final int GET_FROM_GALLERY = 3;
     private Bitmap propertyImageBitMap;
     private ImageView imageView_property_image;
+    private int mInventorySeq;
+    private String mCallName;
+    private ArrayAdapter propertyAdapter;
+    private ArrayAdapter propertUnitAdapter;
+    private ArrayAdapter purposeTypeAdapter;
+    private ArrayAdapter mediumAdapter;
+    private ArrayAdapter facingTypeAdapter;
+    private ArrayAdapter documentTypeAdapter;
+    private ArrayAdapter approvalTypeAdapter;
+    private ArrayAdapter propertySideTypeAdapter;
+    private ArrayAdapter rateFactorTypeAdapter;
+    private ArrayAdapter propertyOfferAdapter;
+    private LayoutHelper layoutHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,7 +165,6 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
         specification = (EditText)findViewById(R.id.specifications);
 
         //Pricing
-        totalAmount = (EditText)findViewById(R.id.expectedAmount);
         rate = (EditText)findViewById(R.id.rate);
 
         //Property Area
@@ -163,7 +179,11 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
         editText_medium_phone = (EditText)findViewById(R.id.mediumphone);
 
         imageView_property_image = (ImageView)findViewById(R.id.property_image);
+        Intent intent = getIntent();
+        mInventorySeq = intent.getIntExtra("inventorySeq",0);
+        layoutHelper = new LayoutHelper(this);
         buildSpinners();
+        executeGetInventoryDetailCall();
     }
 
     @Override
@@ -242,55 +262,56 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
         spinner_thousands = (Spinner) findViewById(R.id.spinner_thousands);
         spinner_rate_factor = (Spinner)findViewById(R.id.ratefactor);
 
-        spinner_property_type.setAdapter(
-                new ArrayAdapter<PropertyType>(this,
-                        android.R.layout.simple_spinner_item,
-                        PropertyType.values()));
+        propertyAdapter =  new ArrayAdapter<PropertyType>(this,
+                android.R.layout.simple_spinner_item,
+                PropertyType.values());
+        spinner_property_type.setAdapter(propertyAdapter);
 
+        purposeTypeAdapter = new ArrayAdapter<PurposeType>(this,
+                android.R.layout.simple_spinner_item,
+                PurposeType.values());
+        spinner_purpose.setAdapter(purposeTypeAdapter);
 
-        spinner_purpose.setAdapter(
-                new ArrayAdapter<PurposeType>(this,
-                        android.R.layout.simple_spinner_item,
-                        PurposeType.values()));
-
-        spinner_medium.setAdapter(
-                new ArrayAdapter<MediumType>(this,
-                        android.R.layout.simple_spinner_item,
-                        MediumType.values()));
+        mediumAdapter = new ArrayAdapter<MediumType>(this,
+                android.R.layout.simple_spinner_item,
+                MediumType.values());
+        spinner_medium.setAdapter(mediumAdapter);
         spinner_medium.setOnItemSelectedListener(new mediumSpinnerChangeListener(this));
-        spinner_offer.setAdapter(
-                new ArrayAdapter<PropertyOfferType>(this,
-                        android.R.layout.simple_spinner_item,
-                        PropertyOfferType.values()));
 
-        spinner_property_Unit.setAdapter(
-                new ArrayAdapter<PropertyUnit>(this,
-                        android.R.layout.simple_spinner_item,
-                        PropertyUnit.values()));
+        propertyOfferAdapter = new ArrayAdapter<PropertyOfferType>(this,
+                android.R.layout.simple_spinner_item,
+                PropertyOfferType.values());
+        spinner_offer.setAdapter(propertyOfferAdapter);
 
-        spinner_facing.setAdapter(
-                new ArrayAdapter<FacingType>(this,
-                        android.R.layout.simple_spinner_item,
-                        FacingType.values()));
+        propertUnitAdapter =  new ArrayAdapter<PropertyUnit>(this,
+                android.R.layout.simple_spinner_item,
+                PropertyUnit.values());
+        spinner_property_Unit.setAdapter(propertUnitAdapter);
 
-        spinner_document_type.setAdapter(
-                new ArrayAdapter<DocumentType>(this,
+        facingTypeAdapter = new ArrayAdapter<FacingType>(this,
                         android.R.layout.simple_spinner_item,
-                        DocumentType.values()));
+                        FacingType.values());
+        spinner_facing.setAdapter(facingTypeAdapter);
 
-        spinner_approval_type.setAdapter(
-                new ArrayAdapter<ApprovalType>(this,
-                        android.R.layout.simple_spinner_item,
-                        ApprovalType.values()));
+        documentTypeAdapter = new ArrayAdapter<DocumentType>(this,
+                android.R.layout.simple_spinner_item,
+                DocumentType.values());
+        spinner_document_type.setAdapter(documentTypeAdapter);
 
-        spinner_property_side.setAdapter(
-                new ArrayAdapter<PropertySideType>(this,
-                        android.R.layout.simple_spinner_item,
-                        PropertySideType.values()));
-        spinner_rate_factor.setAdapter(
-                new ArrayAdapter<RateFactorType>(this,
-                        android.R.layout.simple_spinner_item,
-                        RateFactorType.values()));
+        approvalTypeAdapter = new ArrayAdapter<ApprovalType>(this,
+                android.R.layout.simple_spinner_item,
+                ApprovalType.values());
+        spinner_approval_type.setAdapter(approvalTypeAdapter);
+
+        propertySideTypeAdapter = new ArrayAdapter<PropertySideType>(this,
+                android.R.layout.simple_spinner_item,
+                PropertySideType.values());
+        spinner_property_side.setAdapter(propertySideTypeAdapter);
+
+        rateFactorTypeAdapter =  new ArrayAdapter<RateFactorType>(this,
+                android.R.layout.simple_spinner_item,
+                RateFactorType.values());
+        spinner_rate_factor.setAdapter(rateFactorTypeAdapter);
 
         List numbers = new ArrayList<Integer>();
         for (int i = 0; i <= 99; i++) {
@@ -309,6 +330,14 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
         spinner_lakhs.setOnItemSelectedListener(new spinnerChangeListener(this));
     }
 
+    private void executeGetInventoryDetailCall(){
+        if(mInventorySeq > 0) {
+            Object args[] = {mInventorySeq};
+            String getInventoryDetailUrl = MessageFormat.format(StringConstants.GET_INVENTORY_DETAIL, args);
+            mAuthTask = new ServiceHandler(getInventoryDetailUrl, this, GET_INVENTORY_DETAIL,this);
+            mAuthTask.execute();
+        }
+    }
 
     private void saveInventory()throws Exception{
         contact_name.setError(null);
@@ -377,16 +406,17 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
                     URLEncoder.encode(textView_expected_amount.getText().toString(), "UTF-8"),
                     URLEncoder.encode(rate.getText().toString(), "UTF-8"),
                     URLEncoder.encode(rateFactor, "UTF-8"),
+                    URLEncoder.encode(specification.getText().toString(), "UTF-8"),
                     URLEncoder.encode("1111", "UTF-8"),
                     URLEncoder.encode("2222", "UTF-8"),
-                    URLEncoder.encode(specification.getText().toString(), "UTF-8"),
                     URLEncoder.encode(purposeType, "UTF-8"),
                     1,
                     URLEncoder.encode(editText_medium_name.getText().toString(), "UTF-8"),
                     URLEncoder.encode(editText_medium_address.getText().toString(), "UTF-8"),
-                    URLEncoder.encode(editText_medium_phone.getText().toString(), "UTF-8")};
+                    URLEncoder.encode(editText_medium_phone.getText().toString(), "UTF-8"),
+                    mInventorySeq};
             String dashboardCountUrl = MessageFormat.format(StringConstants.SAVE_INVENTORY,args);
-            mAuthTask = new ServiceHandler(dashboardCountUrl,this,this);
+            mAuthTask = new ServiceHandler(dashboardCountUrl,this, SAVE_INVENTORY,this);
             mAuthTask.setFileUploadRequest(true);
             mAuthTask.setBitmap(propertyImageBitMap);
             mAuthTask.execute();
@@ -417,7 +447,18 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
             success = response.getInt("success") == 1 ? true : false;
             message = response.getString("message");
             if(success){
-
+                if(mCallName.equals(GET_INVENTORY_DETAIL)){
+                    populateInventoryDetail(response);
+                }else if(mCallName.equals(SAVE_INVENTORY)){
+                    if(mInventorySeq > 0){
+                        Intent detailIntent = new Intent(this,InventoryDetails.class);
+                        detailIntent.putExtra(StringConstants.SEQ,mInventorySeq);
+                        startActivity(detailIntent);
+                    }else{
+                        Intent listIntent = new Intent(this,InventoryList.class);
+                        startActivity(listIntent);
+                    }
+                }
             }
         }catch (Exception e){
             message = "Error :- " + e.getMessage();
@@ -427,9 +468,88 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
         }
     }
 
+    public void populateInventoryDetail(JSONObject response)throws Exception{
+            JSONObject inventoryJson = response.getJSONObject("inventory");
+            String propertyType = inventoryJson.getString("propertytype");
+            String area = inventoryJson.getString("propertyarea");
+            String unit = inventoryJson.getString("propertyunit");
+            String address1 = inventoryJson.getString("address1");
+            String contactPerson = inventoryJson.getString("contactperson");
+            String contactMobile = inventoryJson.getString("contactmobile");
+            String contactAddress = inventoryJson.getString("contactaddress");
+            String imagepath = inventoryJson.getString("imagepath");
+            String medium = inventoryJson.getString("medium");
+            String offer = inventoryJson.getString("propertyoffer");
+            String plotNumber = inventoryJson.getString("plotnumber");
+            String purpose = inventoryJson.getString("purpose");
+
+            String address2 = inventoryJson.getString("address2");
+            String city = inventoryJson.getString("city");
+            String landMark = inventoryJson.getString("landmark");
+
+            String dimensionLength = inventoryJson.getString("dimensionlength");
+            String dimensionBreadth = inventoryJson.getString("dimensionbreadth");
+            String facing = inventoryJson.getString("facing");
+            String documentation = inventoryJson.getString("documentation");
+            String referredBy = inventoryJson.getString("referredby");
+
+            String organisation = inventoryJson.getString("organisation");
+            String rate = inventoryJson.getString("rate");
+            String expectedAmount = inventoryJson.getString("expectedamount");
+            String time = inventoryJson.getString("time");
+            String specifications = inventoryJson.getString("specifications");
+            String mediumName = inventoryJson.getString("mediumname");
+            String mediumAddress = inventoryJson.getString("mediumaddress");
+            String mediumPhone = inventoryJson.getString("mediumphone");
+
+
+            if(!propertyType.isEmpty()) {
+                spinner_property_type.setSelection(propertyAdapter.getPosition(PropertyType.valueOf(propertyType)));
+            }
+            propertyArea.setText(area);
+            if(!unit.isEmpty()) {
+                spinner_property_Unit.setSelection(propertUnitAdapter.getPosition(PropertyUnit.valueOf(unit)));
+            }
+            this.address1.setText(address1);
+            contact_name.setText(contactPerson);
+            contact_mobile.setText(contactMobile);
+            contact_address.setText(contactAddress);
+            layoutHelper.loadImageRequest(imageView_property_image,imagepath);
+            if(!medium.isEmpty() && !medium.equals("null")) {
+                spinner_medium.setSelection(mediumAdapter.getPosition(MediumType.valueOf(medium)));
+            }
+            if(!offer.isEmpty() && !offer.equals("null")) {
+                spinner_offer.setSelection(propertyOfferAdapter.getPosition(PropertyOfferType.valueOf(offer)));
+            }
+            plotNo.setText(plotNumber);
+            if(!purpose.isEmpty() && !purpose.equals("null")) {
+                spinner_purpose.setSelection(purposeTypeAdapter.getPosition(PurposeType.valueOf(purpose)));
+            }
+            this.address2.setText(address2);
+            this.city.setText(city);
+            this.landmark.setText(landMark);
+            this.length.setText(dimensionLength);
+            this.breadth.setText(dimensionBreadth);
+            if(!facing.isEmpty() && !facing.equals("null")) {
+                this.spinner_facing.setSelection(facingTypeAdapter.getPosition(FacingType.valueOf(facing)));
+            }
+            if(!documentation.isEmpty() && !documentation.equals("null")) {
+                this.spinner_document_type.setSelection(documentTypeAdapter.getPosition(DocumentType.valueOf(documentation)));
+            }
+            this.refferedBy.setText(referredBy);
+            this.organisation.setText(organisation);
+            this.rate.setText(rate);
+            this.textView_expected_amount.setText(expectedAmount);
+            this.time.setText(time);
+            this.specification.setText(specifications);
+            this.editText_medium_name.setText(mediumName);
+            this.editText_medium_phone.setText(mediumPhone);
+            this.editText_medium_address.setText(mediumAddress);
+    }
+
     @Override
     public void setCallName(String call) {
-
+        mCallName = call;
     }
 
     private void clickpic() {
@@ -469,7 +589,9 @@ class spinnerChangeListener implements AdapterView.OnItemSelectedListener{
            int lk = Integer.parseInt(activity.spinner_lakhs.getSelectedItem().toString()) * 100000;
            int th = Integer.parseInt(activity.spinner_thousands.getSelectedItem().toString()) * 1000;
            Integer total = cr + lk + th;
-           activity.textView_expected_amount.setText(total.toString());
+           if(cr > 0 || lk > 0 || th > 0 ) {
+               activity.textView_expected_amount.setText(total.toString());
+           }
        }
     }
 

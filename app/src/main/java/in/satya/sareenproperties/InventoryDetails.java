@@ -1,11 +1,15 @@
 package in.satya.sareenproperties;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,6 +33,9 @@ import in.satya.sareenproperties.utils.LayoutHelper;
 import in.satya.sareenproperties.utils.StringConstants;
 
 public class InventoryDetails extends AppCompatActivity implements IServiceHandler {
+    private static final String GET_INVENTORY_DETAIL = "getInventoryDetail";
+    private static final String DELETE_INVENTORY = "deleteInventory";
+    private String mCallName;
     private int mInventorySeq;
     private ServiceHandler mAuthTask = null;
     private TextView textView_property_detail;
@@ -60,12 +67,6 @@ public class InventoryDetails extends AppCompatActivity implements IServiceHandl
     private TextView textView_spec;
     private ImageView imageView_property;
     private LayoutHelper layoutHelper;
-
-
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,15 +116,105 @@ public class InventoryDetails extends AppCompatActivity implements IServiceHandl
             }
         });
     }
+    private void populateInventoryDetail(JSONObject response)throws Exception{
+        JSONObject inventoryJson = response.getJSONObject("inventory");
+        String propertyType = inventoryJson.getString("propertytype");
+        if (!propertyType.isEmpty() && !propertyType.equals("null")) {
+            propertyType = PropertyType.valueOf(propertyType).toString();
+        }
+        String area = inventoryJson.getString("propertyarea");
+        String unit = inventoryJson.getString("propertyunit");
+        if (!unit.isEmpty() && !unit.equals("null")) {
+            unit = PropertyUnit.valueOf(unit).toString();
+        }
+        String address1 = inventoryJson.getString("address1");
+        String contactPerson = inventoryJson.getString("contactperson");
+        String contactMobile = inventoryJson.getString("contactmobile");
+        String contactAddress = inventoryJson.getString("contactaddress");
+        String imagepath = inventoryJson.getString("imagepath");
+        String createdOn = inventoryJson.getString("createdon");
+        Date createdDate = DateUtil.stringToDate(createdOn);
+        createdOn = DateUtil.dateToFormat(createdDate, DateUtil.format);
+        String modifiedOn = inventoryJson.getString("lastmodifiedon");
+        Date lastModifiedOn = DateUtil.stringToDate(modifiedOn);
+        modifiedOn = DateUtil.dateToFormat(lastModifiedOn, DateUtil.format);
+        String medium = inventoryJson.getString("medium");
+        if (!medium.isEmpty() && !medium.equals("null")) {
+            medium = MediumType.valueOf(medium).toString();
+        }
+        String plotNumber = inventoryJson.getString("plotnumber");
+        String purpose = inventoryJson.getString("purpose");
+        if (!purpose.isEmpty() && !purpose.equals("null")) {
+            purpose = PurposeType.valueOf(purpose).toString();
+        }
+        String address2 = inventoryJson.getString("address2");
+        String city = inventoryJson.getString("city");
+        String landMark = inventoryJson.getString("landmark");
 
+        String dimensionLength = inventoryJson.getString("dimensionlength");
+        String dimensionBreadth = inventoryJson.getString("dimensionbreadth");
+        String facing = inventoryJson.getString("facing");
+        if (!facing.isEmpty() && !facing.equals("null")) {
+            facing = FacingType.valueOf(facing).toString();
+        }
+        String documentation = inventoryJson.getString("documentation");
+        if (!documentation.isEmpty() && !documentation.equals("null")) {
+            documentation = DocumentType.valueOf(documentation).toString();
+        }
+        String referredBy = inventoryJson.getString("referredby");
+
+        String organisation = inventoryJson.getString("organisation");
+        String rate = inventoryJson.getString("rate");
+        String expectedAmount = inventoryJson.getString("expectedamount");
+        String time = inventoryJson.getString("time");
+        int availability = inventoryJson.getInt("isavailable");
+        String specifications = inventoryJson.getString("specifications");
+        textView_property_detail.setText(propertyType + " - " + area + " " + unit);
+        textView_contact_detail.setText(contactPerson + "-" + contactMobile);
+        textView_address.setText(address1);
+
+        textView_createdOn.setText(createdOn);
+        textView_modifiedOn.setText(modifiedOn);
+        textView_property_type.setText(propertyType);
+        textView_medium.setText(medium);
+        textView_plot_number.setText(plotNumber);
+        textView_purpose.setText(purpose);
+        textView_address1.setText(address1);
+        textView_address2.setText(address2);
+        textView_city.setText(city);
+        textView_landmark.setText(landMark);
+        textView_area.setText(area + " " + unit);
+        textView_dimensions.setText(dimensionLength + " x " + dimensionBreadth + " " + unit);
+        textView_facing.setText(facing);
+        textView_document.setText(documentation);
+        textView_contact_name.setText(contactPerson);
+        textView_referred_by.setText(referredBy);
+        textView_mobile.setText(contactMobile);
+        textView_organisation.setText(organisation);
+        textView_contact_address.setText(contactAddress);
+        textView_rate.setText(rate + "/-");
+        textView_amount.setText(expectedAmount + "/-");
+        textView_time.setText(time);
+        if (availability > 0) {
+            textView_availability.setText("Available");
+        } else {
+            textView_availability.setText("Not Available");
+        }
+        textView_spec.setText(specifications);
+        layoutHelper.loadImageRequest(imageView_property, imagepath);
+    }
     private void executeGetInventoryDetailCall(){
         Object args[] = {mInventorySeq};
         String getInventoryDetailUrl = MessageFormat.format(StringConstants.GET_INVENTORY_DETAIL,args);
-        mAuthTask = new ServiceHandler(getInventoryDetailUrl,this,this);
+        mAuthTask = new ServiceHandler(getInventoryDetailUrl,this, GET_INVENTORY_DETAIL,this);
         mAuthTask.execute();
     }
-    public void populateInventory(){
 
+    private void deleteInventory(){
+        Object args[] = {mInventorySeq};
+        String deleteInventoryUrl = MessageFormat.format(StringConstants.DELETE_INVENTORY,args);
+        mAuthTask = new ServiceHandler(deleteInventoryUrl,this, DELETE_INVENTORY,this);
+        mAuthTask.execute();
     }
 
     @Override
@@ -136,79 +227,12 @@ public class InventoryDetails extends AppCompatActivity implements IServiceHandl
             success = response.getInt("success") == 1 ? true : false;
             message = response.getString("message");
             if(success){
-                JSONObject inventoryJson = response.getJSONObject("inventory");
-                String propertyType = inventoryJson.getString("propertytype");
-                propertyType = PropertyType.valueOf(propertyType).toString();
-                String area = inventoryJson.getString("propertyarea");
-                String unit = inventoryJson.getString("propertyunit");
-                unit = PropertyUnit.valueOf(unit).toString();
-                String address1 = inventoryJson.getString("address1");
-                String contactPerson = inventoryJson.getString("contactperson");
-                String contactMobile = inventoryJson.getString("contactmobile");
-                String contactAddress = inventoryJson.getString("contactaddress");
-                String imagepath = inventoryJson.getString("imagepath");
-                String createdOn = inventoryJson.getString("createdon");
-                Date createdDate = DateUtil.stringToDate(createdOn);
-                createdOn = DateUtil.dateToFormat(createdDate,DateUtil.format);
-                String modifiedOn = inventoryJson.getString("lastmodifiedon");
-                Date lastModifiedOn = DateUtil.stringToDate(modifiedOn);
-                modifiedOn = DateUtil.dateToFormat(lastModifiedOn,DateUtil.format);
-                String medium = inventoryJson.getString("medium");
-                medium = MediumType.valueOf(medium).toString();
-                String plotNumber = inventoryJson.getString("plotnumber");
-                String purpose = inventoryJson.getString("purpose");
-                purpose = PurposeType.valueOf(purpose).toString();
-                String address2 = inventoryJson.getString("address2");
-                String city = inventoryJson.getString("city");
-                String landMark = inventoryJson.getString("landmark");
-
-                String dimensionLength = inventoryJson.getString("dimensionlength");
-                String dimensionBreadth = inventoryJson.getString("dimensionbreadth");
-                String facing = inventoryJson.getString("facing");
-                facing = FacingType.valueOf(facing).toString();
-                String documentation = inventoryJson.getString("documentation");
-                documentation = DocumentType.valueOf(documentation).toString();
-                String referredBy = inventoryJson.getString("referredby");
-
-                String organisation = inventoryJson.getString("organisation");
-                String rate = inventoryJson.getString("rate");
-                String expectedAmount = inventoryJson.getString("expectedamount");
-                String time = inventoryJson.getString("time");
-                int availability = inventoryJson.getInt("isavailable");
-                String specifications = inventoryJson.getString("specifications");
-                textView_property_detail.setText(propertyType + " - " + area + " " + unit);
-                textView_contact_detail.setText(contactPerson + "-" + contactMobile);
-                textView_address.setText(address1);
-
-                textView_createdOn.setText(createdOn);
-                textView_modifiedOn.setText(modifiedOn);
-                textView_property_type.setText(propertyType);
-                textView_medium.setText(medium);
-                textView_plot_number.setText(plotNumber);
-                textView_purpose.setText(purpose);
-                textView_address1.setText(address1);
-                textView_address2.setText(address2);
-                textView_city.setText(city);
-                textView_landmark.setText(landMark);
-                textView_area.setText(area + " " + unit);
-                textView_dimensions.setText(dimensionLength + " x " + dimensionBreadth + " " + unit);
-                textView_facing.setText(facing);
-                textView_document.setText(documentation);
-                textView_contact_name.setText(contactPerson);
-                textView_referred_by.setText(referredBy);
-                textView_mobile.setText(contactMobile);
-                textView_organisation.setText(organisation);
-                textView_contact_address.setText(contactAddress);
-                textView_rate.setText(rate + "/-");
-                textView_amount.setText(expectedAmount + "/-");
-                textView_time.setText(time);
-                if(availability > 0){
-                    textView_availability.setText("Available");
-                }else{
-                    textView_availability.setText("Not Available");
+                if(mCallName.equals(GET_INVENTORY_DETAIL)) {
+                    populateInventoryDetail(response);
+                }else if(mCallName.equals(DELETE_INVENTORY)){
+                    Intent intent = new Intent(this,InventoryList.class);
+                    startActivity(intent);
                 }
-                textView_spec.setText(specifications);
-                layoutHelper.loadImageRequest(imageView_property,imagepath);
             }
         }catch (Exception e){
             message = "Error :- " + e.getMessage();
@@ -219,7 +243,53 @@ public class InventoryDetails extends AppCompatActivity implements IServiceHandl
     }
 
     @Override
-    public void setCallName(String call) {
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.inventory_detail_menu, menu);
+        return true;
+    }
 
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_edit:
+                Intent intent = new Intent(this, CreateInventory.class);
+                intent.putExtra("inventorySeq",mInventorySeq);
+                startActivity(intent);
+                return true;
+            case R.id.action_delete:
+                deleteNote();
+                return true;
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+    public void deleteNote() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Delete Inventory");
+        builder.setMessage("Do you really want to delete this Inventory?");
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                deleteInventory();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    @Override
+    public void setCallName(String call) {
+        mCallName = call;
     }
 }

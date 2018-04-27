@@ -74,7 +74,10 @@ public class InventoryList extends AppCompatActivity implements IServiceHandler 
                 Intent intent = new Intent(this, InventoryFilterActivity.class);
                 startActivity(intent);
                 return true;
-
+            case R.id.action_refresh:
+                finish();
+                startActivity(new Intent(this, InventoryList.class));
+                return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
