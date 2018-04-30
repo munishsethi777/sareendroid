@@ -68,6 +68,10 @@
         <activity
             android:name=".InventoryFilterActivity"
             android:label="@string/title_activity_inventory_filter"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".EnquiryFilterActivity"
+            android:label="@string/title_activity_enquiry_filter"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

@@ -30,4 +30,5 @@
     <string name="title_activity_create_enquiry">CreateEnquiryActivity</string>
     <string name="title_activity_enquiry_list">EnquiryList</string>
     <string name="title_activity_enquiry_details">EnquiryDetails</string>
+    <string name="title_activity_enquiry_filter">EnquiryFilterActivity</string>
 </resources>
