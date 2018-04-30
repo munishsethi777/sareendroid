@@ -217,6 +217,7 @@ public class CreateEnquiryActivity extends AppCompatActivity implements IService
         String referredBy = enquiryJson.getString("referredby");
         String expectedAmount = enquiryJson.getString("expectedamount");
         int isrental = enquiryJson.getInt("isrental");
+        int isFullfill = enquiryJson.getInt("isfullfilled");
         String specifications = enquiryJson.getString("specifications");
         String length = enquiryJson.getString("dimensionlength");
         String breadth = enquiryJson.getString("dimensionbreadth");
@@ -242,6 +243,7 @@ public class CreateEnquiryActivity extends AppCompatActivity implements IService
         editText_address.setText(contactAddress);
         editText_total_amount.setText(expectedAmount);
         checkBox_rental.setChecked(isrental > 0);
+        checkBox_fullfill.setChecked(isFullfill > 0);
         editText_specifications.setText(specifications);
         editText_length.setText(length);
         editText_breadth.setText(breadth);

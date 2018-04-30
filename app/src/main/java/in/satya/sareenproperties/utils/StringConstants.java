@@ -21,7 +21,7 @@ public class StringConstants {
     public static final String GET_INVENTORY_DETAIL  = ACTION_API_URL + "InventoryAction.php?call=getInventoryDetails&ismobile=1&id={0}";
     public static final String DELETE_INVENTORY  = ACTION_API_URL + "InventoryAction.php?call=deleteInventory&ismobile=1&ids={0}";
     //ENQUIRY ACTION
-    public static final String SAVE_ENQUIRY = ACTION_API_URL + "EnquiryAction.php?call=saveEnquiry&ismobile=1&propertytype={0}&purpose={1}&address={2}&landmark={3}&propertyarea={4}&propertyunit={5}&dimensionlength={6}&dimensionbreadth={7}&facing={8}&referredby={9}&contactperson={10}&contactmobile={11}&contactaddress={12}&isrental={13}&isfullfill={14}&expectedamount={15}&specifications={16}&adminseq={17}&seq={18}";
+    public static final String SAVE_ENQUIRY = ACTION_API_URL + "EnquiryAction.php?call=saveEnquiry&ismobile=1&propertytype={0}&purpose={1}&address={2}&landmark={3}&propertyarea={4}&propertyunit={5}&dimensionlength={6}&dimensionbreadth={7}&facing={8}&referredby={9}&contactperson={10}&contactmobile={11}&contactaddress={12}&isrental={13}&isfullfilled={14}&expectedamount={15}&specifications={16}&adminseq={17}&seq={18}";
     public static final String GET_ENQUIRIES  = ACTION_API_URL + "EnquiryAction.php?call=getEnquiries&ismobile=1";
     public static final String GET_ENQUIRY_DETAIL = ACTION_API_URL + "EnquiryAction.php?call=getEnquiryDetails&ismobile=1&id={0}";
     public static final String DELETE_ENQUIRY  = ACTION_API_URL + "EnquiryAction.php?call=deleteEnquiry&ismobile=1&ids={0}";
