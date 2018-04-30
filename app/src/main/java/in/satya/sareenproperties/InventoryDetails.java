@@ -231,7 +231,7 @@ public class InventoryDetails extends AppCompatActivity implements IServiceHandl
                 if(mCallName.equals(GET_INVENTORY_DETAIL)) {
                     populateInventoryDetail(response);
                 }else if(mCallName.equals(DELETE_INVENTORY)){
-                    Intent intent = new Intent(this,InventoryList.class);
+                    Intent intent = new Intent(this,DashboardActivity.class);
                     startActivity(intent);
                     finish();
                 }

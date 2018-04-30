@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,13 +16,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import in.satya.sareenproperties.Managers.AdminMgr;
+import in.satya.sareenproperties.services.Interface.IServiceHandler;
+import in.satya.sareenproperties.services.ServiceHandler;
+import in.satya.sareenproperties.utils.LayoutHelper;
 import in.satya.sareenproperties.utils.PreferencesUtil;
+import in.satya.sareenproperties.utils.StringConstants;
 
 public class DashboardActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements IServiceHandler, NavigationView.OnNavigationItemSelectedListener {
     private AdminMgr mAdminMgr;
+    private LinearLayout layout_inventory_List;
+    private ServiceHandler mAuthTask = null;
+    private LayoutHelper layoutHelper;
+    private String getInventoryUrl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +59,13 @@ public class DashboardActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        layoutHelper = new LayoutHelper(this);
+        Intent intent = getIntent();
+        getInventoryUrl = intent.getStringExtra("filterData");
+        if(getInventoryUrl == null){
+            getInventoryUrl = StringConstants.GET_INVENTORIES;
+        }
+        executeGetInventoryListCal();
     }
 
     @Override
@@ -53,27 +77,36 @@ public class DashboardActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
+    private void executeGetInventoryListCal(){
+        layout_inventory_List = (LinearLayout)findViewById(R.id.layout_inventory_list) ;
+        layout_inventory_List.removeAllViews();
+        mAuthTask = new ServiceHandler(getInventoryUrl,this,this);
+        mAuthTask.execute();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.dashboard, menu);
+        getMenuInflater().inflate(R.menu.inventorylistmenu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        switch (item.getItemId()) {
+            case R.id.action_filter:
+                // User chose the "Settings" item, show the app settings UI...
+                Intent intent = new Intent(this, InventoryFilterActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_refresh:
+                executeGetInventoryListCal();
+                return true;
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -85,7 +118,7 @@ public class DashboardActivity extends AppCompatActivity
             Intent intent = new Intent(this,CreateInventory.class);
             startActivity(intent);
         } else if (id == R.id.nav_gallery) {
-            Intent intent = new Intent(this,InventoryList.class);
+            Intent intent = new Intent(this,DashboardActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_slideshow) {
             Intent intent = new Intent(this,CreateEnquiryActivity.class);
@@ -94,14 +127,14 @@ public class DashboardActivity extends AppCompatActivity
             Intent intent = new Intent(this,EnquiryList.class);
             startActivity(intent);
         } else if (id == R.id.nav_share) {
-            lgoutConfirm();
+            logoutConfirm();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    public void lgoutConfirm() {
+    public void logoutConfirm() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Logout");
         builder.setMessage("Do you really want to logout?");
@@ -131,5 +164,65 @@ public class DashboardActivity extends AppCompatActivity
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void populateInventoryList(JSONObject response)throws Exception{
+        JSONArray inventories = response.getJSONArray("Rows");
+        LayoutInflater inflater = LayoutInflater.from(this);
+        for(int i=0;i<inventories.length();i++){
+            JSONObject inventoryJson = inventories.getJSONObject(i);
+            final int seq = inventoryJson.getInt("seq");
+            String propertyType = inventoryJson.getString("propertytype");
+            String area = inventoryJson.getString("propertyarea");
+            String unit = inventoryJson.getString("propertyunit");
+            String address1 = inventoryJson.getString("address1");
+            String contactPerson = inventoryJson.getString("contactperson");
+            String contactMobile = inventoryJson.getString("contactmobile");
+            String imagepath = inventoryJson.getString("imagepath");
+
+            LinearLayout fragmentLayout= (LinearLayout) inflater.inflate(R.layout.inventory_list_fragment, null, false);
+            ImageView imageView = fragmentLayout.findViewById(R.id.property_image);
+            ImageButton imageButton = fragmentLayout.findViewById(R.id.imageview_show_detail);
+            TextView textView_property_type = fragmentLayout.findViewById(R.id.textview_property_type);
+            textView_property_type.setText(propertyType + " - " + area + " " + unit);
+            TextView textView_address = fragmentLayout.findViewById(R.id.textview_address);
+            textView_address.setText(address1);
+            TextView textView_contact_detail = fragmentLayout.findViewById(R.id.textview_contact_detail);
+            textView_contact_detail.setText(contactPerson + "-" + contactMobile);
+            layoutHelper.loadImageRequest(imageView,imagepath);
+            imageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showDetail(seq);
+                }
+            });
+            layout_inventory_List.addView(fragmentLayout);
+        }
+        getInventoryUrl = StringConstants.GET_INVENTORIES;
+    }
+
+    private void showDetail(int seq){
+        Intent detailIntent = new Intent(this,InventoryDetails.class);
+        detailIntent.putExtra(StringConstants.SEQ,seq);
+        startActivity(detailIntent);
+    }
+
+    @Override
+    public void processServiceResponse(JSONObject response) {
+        mAuthTask = null;
+        String message = null;
+        try{
+            populateInventoryList(response);
+        }catch (Exception e){
+            message = "Error :- " + e.getMessage();
+        }
+        if(message != null && !message.equals("")){
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void setCallName(String call) {
+
     }
 }

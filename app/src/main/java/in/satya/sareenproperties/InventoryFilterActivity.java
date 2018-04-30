@@ -93,7 +93,7 @@ public class InventoryFilterActivity extends AppCompatActivity implements View.O
 
     private void submitFilter(){
         String filterInventoryUrl = getFilterRequestUrl();
-        Intent listIntent = new Intent(this,InventoryList.class);
+        Intent listIntent = new Intent(this,DashboardActivity.class);
         listIntent.putExtra("filterData",filterInventoryUrl);
         startActivity(listIntent);
     }
