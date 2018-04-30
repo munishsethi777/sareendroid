@@ -30,7 +30,8 @@
         <activity android:name=".LoginActivity">
         </activity>
         <activity
-            android:name=".DashboardActivity">
+            android:name=".DashboardActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
