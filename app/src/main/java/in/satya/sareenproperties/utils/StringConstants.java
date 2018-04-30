@@ -11,6 +11,8 @@ public class StringConstants {
     public static final String SEQ = "seq";
     public static final String CONNECTION_ERROR = "Connection Error.Please check network connection.";
     public static final String WEB_URL = "http://www.sareenproperties.com/software/";
+    public static final String PREFS_NAME = "LoginAuth";
+    public static final String LOGGED_IN_ADMIN_SEQ = "loggedInAdminSeq";
     //User Actions
     //API URL STRINGS
     public static final String ACTION_API_URL = "http://www.sareenproperties.com/software/Actions/";

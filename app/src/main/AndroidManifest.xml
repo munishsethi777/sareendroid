@@ -27,16 +27,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".LoginActivity">
+        </activity>
         <activity
             android:name=".DashboardActivity"
             android:label="@string/title_activity_dashboard"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".CreateInventory"
             android:label="@string/title_activity_create_inventory"
             android:theme="@style/AppTheme.NoActionBar">
-
         </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -54,11 +59,7 @@
             android:name=".InventoryList"
             android:label="@string/title_activity_inventory_list"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".InventoryDetails"
@@ -75,7 +76,6 @@
         <activity
             android:name=".EnquiryList"
             android:label="@string/title_activity_enquiry_list"
-            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".EnquiryDetails"

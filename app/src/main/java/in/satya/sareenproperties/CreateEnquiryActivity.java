@@ -259,6 +259,16 @@ public class CreateEnquiryActivity extends AppCompatActivity implements IService
             if(success){
                 if(mCallName.equals(GET_ENQUIRY_DETAIL)){
                     populateEnquiryDetail(response);
+                }else if(mCallName.equals(SAVE_ENQUIRY)){
+                    if(mEnquirySeq > 0){
+                        Intent detailIntent = new Intent(this,EnquiryDetails.class);
+                        detailIntent.putExtra(StringConstants.SEQ,mEnquirySeq);
+                        startActivity(detailIntent);
+                    }else{
+                        finish();
+                        Intent listIntent = new Intent(this,EnquiryList.class);
+                        startActivity(listIntent);
+                    }
                 }
             }
         }catch (Exception e){

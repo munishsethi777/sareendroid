@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.EditText;
 import org.json.JSONObject;
 import java.text.MessageFormat;
+
+import in.satya.sareenproperties.Managers.AdminMgr;
 import in.satya.sareenproperties.services.Interface.IServiceHandler;
 import in.satya.sareenproperties.services.ServiceHandler;
 import in.satya.sareenproperties.utils.LayoutHelper;
@@ -21,6 +23,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText mUsernameView;
     private EditText mPasswordView;
     private ServiceHandler mAuthTask = null;
+    private AdminMgr mAdminMgr;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +34,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         mPasswordView = (EditText) findViewById(R.id.password_view);
         mUsernameView = (EditText) findViewById(R.id.username_view);
+        mAdminMgr = AdminMgr.getInstance(this);
  }
 
 
@@ -56,7 +60,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             success = response.getInt("success") == 1 ? true : false;
             message = response.getString("message");
             if(success){
-//                mUserMgr.saveUserFromResponse(response);
+                mAdminMgr.saveAdminFromResponse(response);
                 goToDashboardActivity();
             }
         }catch (Exception e){
