@@ -1,7 +1,9 @@
 package in.satya.sareenproperties;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -25,6 +27,7 @@ import in.satya.sareenproperties.utils.LayoutHelper;
 import in.satya.sareenproperties.utils.StringConstants;
 
 public class EnquiryDetails extends AppCompatActivity  implements IServiceHandler{
+    public static final String DELETE_ENQUIRY = "deleteEnquiry";
     private TextView textView_property_type;
     private TextView textView_address;
     private TextView textView_createdOn;
@@ -84,7 +87,14 @@ public class EnquiryDetails extends AppCompatActivity  implements IServiceHandle
         mAuthTask = null;
         String message = null;
         try{
-            populateEnquiryList(response);
+            if(mCallName.equals(DELETE_ENQUIRY)){
+                Intent intent = new Intent(this,EnquiryList.class);
+                startActivity(intent);
+                finish();
+            }else{
+                populateEnquiryList(response);
+            }
+
         }catch (Exception e){
             message = "Error :- " + e.getMessage();
         }
@@ -161,7 +171,7 @@ public class EnquiryDetails extends AppCompatActivity  implements IServiceHandle
                 startActivity(intent);
                 return true;
             case R.id.action_delete:
-                //deleteNote();
+                deleteEnquiry();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -178,6 +188,32 @@ public class EnquiryDetails extends AppCompatActivity  implements IServiceHandle
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.inventory_detail_menu, menu);
         return true;
+    }
+
+    public void deleteEnquiry() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Delete Inventory");
+        builder.setMessage("Do you really want to delete this Enquiry?");
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                executeDeleteEnquiry();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    public void executeDeleteEnquiry(){
+        Object args[] = {mEnquirySeq};
+        String deleteEnquiryUrl = MessageFormat.format(StringConstants.DELETE_ENQUIRY,args);
+        mAuthTask = new ServiceHandler(deleteEnquiryUrl,this, DELETE_ENQUIRY,this);
+        mAuthTask.execute();
     }
 
 }
