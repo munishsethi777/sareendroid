@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/layout_inventory_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="6"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="5dp">
+s            <TextView
+                android:id="@+id/textview_property_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Old House/Plot - 400 sq-yrds"
+                android:textSize="17dp"/>
+            <TextView
+                android:id="@+id/textview_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="314 Palam Vihar, Pakhowal Road."/>
+            <TextView
+                android:id="@+id/textview_contact_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sanjay Sood - 9814012345"
+                android:layout_marginTop="4dp"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+            <ImageButton
+                android:id="@+id/imageview_show_detail"
+                android:layout_width="wrap_content"
+                android:background="#0000"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icons_forward"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

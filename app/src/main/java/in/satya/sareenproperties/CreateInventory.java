@@ -584,8 +584,6 @@ class spinnerChangeListener implements AdapterView.OnItemSelectedListener{
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-       String medium = activity.spinner_medium.getSelectedItem().toString();
-       if(!medium.equals(MediumType.direct)){
            int cr = Integer.parseInt(activity.spinner_crores.getSelectedItem().toString()) * 10000000;
            int lk = Integer.parseInt(activity.spinner_lakhs.getSelectedItem().toString()) * 100000;
            int th = Integer.parseInt(activity.spinner_thousands.getSelectedItem().toString()) * 1000;
@@ -593,7 +591,6 @@ class spinnerChangeListener implements AdapterView.OnItemSelectedListener{
            if(cr > 0 || lk > 0 || th > 0 ) {
                activity.textView_expected_amount.setText(total.toString());
            }
-       }
     }
 
     @Override

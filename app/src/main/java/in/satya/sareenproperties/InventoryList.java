@@ -145,7 +145,6 @@ public class InventoryList extends AppCompatActivity implements IServiceHandler 
         startActivity(detailIntent);
     }
     private void executeGetInventoryListCal(){
-
         layout_inventory_List = (LinearLayout)findViewById(R.id.layout_inventory_list) ;
         layout_inventory_List.removeAllViews();
         mAuthTask = new ServiceHandler(getInventoryUrl,this,this);
