@@ -132,6 +132,8 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
         setContentView(R.layout.activity_create_inventory);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -236,6 +238,12 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
     }
 
 
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
     private boolean isGooglePlayServicesAvailable() {
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
@@ -597,6 +605,8 @@ class spinnerChangeListener implements AdapterView.OnItemSelectedListener{
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
+
 }
 
 class mediumSpinnerChangeListener implements AdapterView.OnItemSelectedListener{

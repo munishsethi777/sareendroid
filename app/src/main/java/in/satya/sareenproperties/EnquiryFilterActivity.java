@@ -37,6 +37,8 @@ public class EnquiryFilterActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_enquiry_filter);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         filterDataMap = new HashMap<String,Object>();
         editText_amount_from = (EditText) findViewById(R.id.amountFrom);
         editText_amount_to = (EditText) findViewById(R.id.amountTo);
@@ -148,5 +150,11 @@ public class EnquiryFilterActivity extends AppCompatActivity implements View.OnC
         if(id == R.id.button_apply_filter){
             submitFilter();
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

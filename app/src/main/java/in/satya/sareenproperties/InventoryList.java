@@ -46,6 +46,8 @@ public class InventoryList extends AppCompatActivity implements IServiceHandler 
         setContentView(R.layout.activity_inventory_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         layoutHelper = new LayoutHelper(this);
         Intent intent = getIntent();
         getInventoryUrl = intent.getStringExtra("filterData");
@@ -57,7 +59,11 @@ public class InventoryList extends AppCompatActivity implements IServiceHandler 
 
 
 
-
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

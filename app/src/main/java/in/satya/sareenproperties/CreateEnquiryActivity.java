@@ -69,7 +69,8 @@ public class CreateEnquiryActivity extends AppCompatActivity implements IService
         setContentView(R.layout.activity_create_enquiry);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -247,6 +248,12 @@ public class CreateEnquiryActivity extends AppCompatActivity implements IService
         editText_specifications.setText(specifications);
         editText_length.setText(length);
         editText_breadth.setText(breadth);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
     @Override
     public void processServiceResponse(JSONObject response) {
