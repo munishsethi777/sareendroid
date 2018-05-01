@@ -28,6 +28,7 @@
                     android:id="@+id/propertytype"
                     android:layout_width="0dp"
                     android:layout_weight="3"
+                    android:spinnerMode="dialog"
                     android:layout_height="wrap_content">
                 </Spinner>
             </LinearLayout>
@@ -51,6 +52,7 @@
                     android:id="@+id/purpose"
                     android:layout_width="0dp"
                     android:layout_weight="3"
+                    android:spinnerMode="dialog"
                     android:layout_height="wrap_content">
                 </Spinner>
             </LinearLayout>
@@ -76,6 +78,7 @@
                     android:id="@+id/facing"
                     android:layout_width="0dp"
                     android:layout_weight="3"
+                    android:spinnerMode="dialog"
                     android:layout_height="wrap_content">
                 </Spinner>
             </LinearLayout>
@@ -141,6 +144,7 @@
                     android:id="@+id/isRental"
                     android:layout_width="0dp"
                     android:layout_weight="3"
+                    android:spinnerMode="dialog"
                     android:layout_height="wrap_content">
                 </Spinner>
             </LinearLayout>
@@ -165,6 +169,7 @@
                     android:id="@+id/isFulfilled"
                     android:layout_width="0dp"
                     android:layout_weight="3"
+                    android:spinnerMode="dialog"
                     android:layout_height="wrap_content">
                 </Spinner>
             </LinearLayout>

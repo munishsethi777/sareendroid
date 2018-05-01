@@ -119,22 +119,22 @@ public class CreateEnquiryActivity extends AppCompatActivity implements IService
         spinner_lakhs = (Spinner)findViewById(R.id.lakhs);
 
         propertyAdapter =  new ArrayAdapter<PropertyType>(this,
-                android.R.layout.simple_spinner_item,
+                R.layout.spinner_row,
                 PropertyType.values());
         spinner_property_type.setAdapter(propertyAdapter);
 
         purposeTypeAdapter = new ArrayAdapter<PurposeType>(this,
-                android.R.layout.simple_spinner_item,
+               R.layout.spinner_row,
                 PurposeType.values());
         spinner_purpose.setAdapter(purposeTypeAdapter);
 
         propertyUnitAdapter =  new ArrayAdapter<PropertyUnit>(this,
-                android.R.layout.simple_spinner_item,
+                R.layout.spinner_row,
                 PropertyUnit.values());
         spinner_unit.setAdapter(propertyUnitAdapter);
 
         facingTypeAdapter = new ArrayAdapter<FacingType>(this,
-                android.R.layout.simple_spinner_item,
+                R.layout.spinner_row,
                 FacingType.values());
         spinner_facing.setAdapter(facingTypeAdapter);
 
@@ -143,7 +143,7 @@ public class CreateEnquiryActivity extends AppCompatActivity implements IService
             numbers.add(Integer.toString(i));
         }
         ArrayAdapter<Integer> spinnerArrayAdapter = new ArrayAdapter<Integer>(
-                this, android.R.layout.simple_spinner_item, numbers);
+                this, R.layout.spinner_row, numbers);
         spinnerArrayAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
         spinner_crores.setAdapter(spinnerArrayAdapter);
         spinner_crores.setOnItemSelectedListener(new AmountSpinnerChangeListener(this));
@@ -234,9 +234,12 @@ public class CreateEnquiryActivity extends AppCompatActivity implements IService
         if(!facing.isEmpty() && !facing.equals("null")) {
             this.spinner_facing.setSelection(facingTypeAdapter.getPosition(FacingType.valueOf(facing)));
         }
+        if(!unit.isEmpty() && !unit.equals("null")) {
+            this.spinner_unit.setSelection(propertyUnitAdapter.getPosition(PropertyUnit.valueOf(unit)));
+        }
 
         editText_landmark.setText(landMark);
-        editText_area.setText(area + " " + unit);
+        editText_area.setText(area);
 
         editText_name.setText(contactPerson);
         editText_referred.setText(referredBy);
@@ -309,9 +312,7 @@ class AmountSpinnerChangeListener implements AdapterView.OnItemSelectedListener{
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
+    public void onNothingSelected(AdapterView<?> adapterView) { }
 
 
 }

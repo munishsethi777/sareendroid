@@ -2,6 +2,7 @@ package in.satya.sareenproperties;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -201,10 +202,10 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
             }
         });
          try{
-             LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-            // Criteria criteria = new Criteria();
-            // String bestProvider = locationManager.getBestProvider(criteria, true);
-            // Location location = locationManager.getLastKnownLocation(bestProvider);
+//             LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+//             Criteria criteria = new Criteria();
+//             String bestProvider = locationManager.getBestProvider(criteria, true);
+//             Location location = locationManager.getLastKnownLocation(bestProvider);
 //             if (location != null) {
 //                 onLocationChanged(location);
 //             }
@@ -271,53 +272,53 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
         spinner_rate_factor = (Spinner)findViewById(R.id.ratefactor);
 
         propertyAdapter =  new ArrayAdapter<PropertyType>(this,
-                android.R.layout.simple_spinner_item,
+                R.layout.spinner_row,
                 PropertyType.values());
         spinner_property_type.setAdapter(propertyAdapter);
 
         purposeTypeAdapter = new ArrayAdapter<PurposeType>(this,
-                android.R.layout.simple_spinner_item,
+                R.layout.spinner_row,
                 PurposeType.values());
         spinner_purpose.setAdapter(purposeTypeAdapter);
 
         mediumAdapter = new ArrayAdapter<MediumType>(this,
-                android.R.layout.simple_spinner_item,
+                R.layout.spinner_row,
                 MediumType.values());
         spinner_medium.setAdapter(mediumAdapter);
         spinner_medium.setOnItemSelectedListener(new mediumSpinnerChangeListener(this));
 
         propertyOfferAdapter = new ArrayAdapter<PropertyOfferType>(this,
-                android.R.layout.simple_spinner_item,
+                R.layout.spinner_row,
                 PropertyOfferType.values());
         spinner_offer.setAdapter(propertyOfferAdapter);
 
         propertUnitAdapter =  new ArrayAdapter<PropertyUnit>(this,
-                android.R.layout.simple_spinner_item,
+                R.layout.spinner_row,
                 PropertyUnit.values());
         spinner_property_Unit.setAdapter(propertUnitAdapter);
 
         facingTypeAdapter = new ArrayAdapter<FacingType>(this,
-                        android.R.layout.simple_spinner_item,
+                R.layout.spinner_row,
                         FacingType.values());
         spinner_facing.setAdapter(facingTypeAdapter);
 
         documentTypeAdapter = new ArrayAdapter<DocumentType>(this,
-                android.R.layout.simple_spinner_item,
+                R.layout.spinner_row,
                 DocumentType.values());
         spinner_document_type.setAdapter(documentTypeAdapter);
 
         approvalTypeAdapter = new ArrayAdapter<ApprovalType>(this,
-                android.R.layout.simple_spinner_item,
+                R.layout.spinner_row,
                 ApprovalType.values());
         spinner_approval_type.setAdapter(approvalTypeAdapter);
 
         propertySideTypeAdapter = new ArrayAdapter<PropertySideType>(this,
-                android.R.layout.simple_spinner_item,
+                R.layout.spinner_row,
                 PropertySideType.values());
         spinner_property_side.setAdapter(propertySideTypeAdapter);
 
         rateFactorTypeAdapter =  new ArrayAdapter<RateFactorType>(this,
-                android.R.layout.simple_spinner_item,
+                R.layout.spinner_row,
                 RateFactorType.values());
         spinner_rate_factor.setAdapter(rateFactorTypeAdapter);
 
@@ -326,7 +327,7 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
             numbers.add(Integer.toString(i));
         }
         ArrayAdapter<Integer> spinnerArrayAdapter = new ArrayAdapter<Integer>(
-                this, android.R.layout.simple_spinner_item, numbers);
+                this,  android.R.layout.simple_spinner_dropdown_item, numbers);
         spinnerArrayAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
         spinner_crores.setAdapter(spinnerArrayAdapter);
         spinner_crores.setOnItemSelectedListener(new spinnerChangeListener(this));
@@ -618,7 +619,8 @@ class mediumSpinnerChangeListener implements AdapterView.OnItemSelectedListener{
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         String medium = this.activity.spinner_medium.getSelectedItem().toString();
-        if(!medium.equals(MediumType.direct.toString())){
+        if(!medium.equals(MediumType.direct.toString()) &&
+                !medium.equals(MediumType.selectAny.toString())){
             this.activity.mediumDetailLayout.setVisibility(View.VISIBLE);
         }else{
             this.activity.mediumDetailLayout.setVisibility(View.GONE);

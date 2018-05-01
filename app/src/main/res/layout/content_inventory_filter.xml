@@ -29,6 +29,7 @@
                         android:id="@+id/propertytype"
                         android:layout_width="0dp"
                         android:layout_weight="3"
+                        android:spinnerMode="dialog"
                         android:layout_height="wrap_content">
                     </Spinner>
             </LinearLayout>
@@ -52,6 +53,7 @@
                     android:id="@+id/purpose"
                     android:layout_width="0dp"
                     android:layout_weight="3"
+                    android:spinnerMode="dialog"
                     android:layout_height="wrap_content">
                 </Spinner>
             </LinearLayout>
@@ -76,6 +78,7 @@
                     android:id="@+id/medium"
                     android:layout_width="0dp"
                     android:layout_weight="3"
+                    android:spinnerMode="dialog"
                     android:layout_height="wrap_content">
                 </Spinner>
             </LinearLayout>
@@ -100,6 +103,7 @@
                     android:id="@+id/facing"
                     android:layout_width="0dp"
                     android:layout_weight="3"
+                    android:spinnerMode="dialog"
                     android:layout_height="wrap_content">
                 </Spinner>
             </LinearLayout>
@@ -183,8 +187,6 @@
                     android:text="Submit"
                     style="@style/ButtonOrange"/>
             </LinearLayout>
-
-
         </LinearLayout>
     </ScrollView>
 
