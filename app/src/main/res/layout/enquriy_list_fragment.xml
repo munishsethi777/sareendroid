@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginBottom="10dp">
     <LinearLayout
         android:id="@+id/layout_inventory_list"
         android:layout_width="match_parent"
@@ -33,18 +35,28 @@ s            <TextView
                 android:layout_marginTop="4dp"/>
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:gravity="center_vertical">
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
             <ImageButton
                 android:id="@+id/imageview_show_detail"
                 android:layout_width="wrap_content"
-                android:background="#0000"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icons_forward"/>
+                android:alpha="0.5"
+                android:background="#0000"
+                android:src="@drawable/icons_forward" />
 
         </LinearLayout>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimaryDark"
+        android:alpha="0.5"
+        android:layout_marginTop="10dp"/>
 </LinearLayout>
