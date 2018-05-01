@@ -101,6 +101,10 @@ public class EnquiryList extends AppCompatActivity implements IServiceHandler {
             case R.id.action_refresh:
                 executeGetEnquiryListCal();
                 return true;
+            case R.id.action_add:
+                intent = new Intent(this, CreateEnquiryActivity.class);
+                startActivity(intent);
+                return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.

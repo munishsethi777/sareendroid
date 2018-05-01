@@ -96,6 +96,10 @@ public class DashboardActivity extends AppCompatActivity
             case R.id.action_refresh:
                 executeGetInventoryListCal();
                 return true;
+            case R.id.action_add:
+                intent = new Intent(this, CreateInventory.class);
+                startActivity(intent);
+                return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
