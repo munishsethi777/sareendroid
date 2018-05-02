@@ -2,6 +2,8 @@ package in.satya.sareenproperties;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,6 +70,7 @@ public class InventoryDetails extends AppCompatActivity implements IServiceHandl
     private TextView textView_spec;
     private ImageView imageView_property;
     private LayoutHelper layoutHelper;
+    private ImageButton imageButton_showLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +112,7 @@ public class InventoryDetails extends AppCompatActivity implements IServiceHandl
         textView_availability = (TextView)findViewById(R.id.details_availability);
         textView_spec = (TextView)findViewById(R.id.details_specifications);
         imageView_property = (ImageView)findViewById(R.id.details_imageView);
+        imageButton_showLocation = (ImageButton)findViewById(R.id.imageButton_showLocation);
         layoutHelper = new LayoutHelper(this);
         executeGetInventoryDetailCall();
         fab.setOnClickListener(new View.OnClickListener() {
@@ -188,7 +193,11 @@ public class InventoryDetails extends AppCompatActivity implements IServiceHandl
         String time = inventoryJson.getString("time");
         int availability = inventoryJson.getInt("isavailable");
         String specifications = inventoryJson.getString("specifications");
-        textView_property_detail.setText(propertyType + " - " + area + " " + unit);
+        final double latitude = inventoryJson.getDouble("latitude");
+        final double longitude = inventoryJson.getDouble("longitude");
+
+        final String propertyDetail = propertyType + " - " + area + " " + unit;
+        textView_property_detail.setText(propertyDetail);
         textView_contact_detail.setText(contactPerson + "-" + contactMobile);
         textView_address.setText(address1);
 
@@ -220,7 +229,17 @@ public class InventoryDetails extends AppCompatActivity implements IServiceHandl
             textView_availability.setText("Not Available");
         }
         textView_spec.setText(specifications);
+        imageButton_showLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri mapUri = Uri.parse("geo:0,0?q=" + latitude + "," + longitude + " (" + propertyDetail + ")");
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, mapUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                startActivity(mapIntent);
+            }
+        });
         layoutHelper.loadImageRequest(imageView_property, imagepath);
+
     }
     private void executeGetInventoryDetailCall(){
         Object args[] = {mInventorySeq};
@@ -310,4 +329,6 @@ public class InventoryDetails extends AppCompatActivity implements IServiceHandl
     public void setCallName(String call) {
         mCallName = call;
     }
+
+
 }
