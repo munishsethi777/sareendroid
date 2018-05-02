@@ -70,23 +70,23 @@ public class InventoryFilterActivity extends AppCompatActivity implements View.O
         spinner_facing = (Spinner) findViewById(R.id.facing);
         spinner_type.setAdapter(
                 new ArrayAdapter<PropertyType>(this,
-                        android.R.layout.simple_spinner_item,
+                        R.layout.spinner_row,
                         PropertyType.values()));
 
 
         spinner_purpose.setAdapter(
                 new ArrayAdapter<PurposeType>(this,
-                        android.R.layout.simple_spinner_item,
+                        R.layout.spinner_row,
                         PurposeType.values()));
 
         spinner_medium.setAdapter(
                 new ArrayAdapter<MediumType>(this,
-                        android.R.layout.simple_spinner_item,
+                        R.layout.spinner_row,
                         MediumType.values()));
 
         spinner_facing.setAdapter(
                 new ArrayAdapter<FacingType>(this,
-                        android.R.layout.simple_spinner_item,
+                        R.layout.spinner_row,
                         FacingType.values()));
     }
 

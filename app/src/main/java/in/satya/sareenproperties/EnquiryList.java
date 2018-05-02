@@ -38,6 +38,8 @@ public class EnquiryList extends AppCompatActivity implements IServiceHandler {
         setContentView(R.layout.activity_enquiry_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         Intent intent = getIntent();
         getEnquiryUrl = intent.getStringExtra("filterData");
         if(getEnquiryUrl == null){
@@ -53,6 +55,21 @@ public class EnquiryList extends AppCompatActivity implements IServiceHandler {
         mAuthTask.execute();
     }
 
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this,DashboardActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        Intent intent = new Intent(this,DashboardActivity.class);
+        startActivity(intent);
+        finish();
+        return true;
+    }
     @Override
     public void processServiceResponse(JSONObject response) {
         mAuthTask = null;
@@ -83,6 +100,10 @@ public class EnquiryList extends AppCompatActivity implements IServiceHandler {
                 return true;
             case R.id.action_refresh:
                 executeGetEnquiryListCal();
+                return true;
+            case R.id.action_add:
+                intent = new Intent(this, CreateEnquiryActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 // If we got here, the user's action was not recognized.

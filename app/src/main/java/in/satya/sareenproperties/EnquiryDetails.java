@@ -54,6 +54,8 @@ public class EnquiryDetails extends AppCompatActivity  implements IServiceHandle
         setContentView(R.layout.activity_enquiry_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         textView_address = (TextView)findViewById(R.id.details_propertyaddress);
         textView_createdOn = (TextView)findViewById(R.id.details_createdOn);
         textView_modifiedOn = (TextView)findViewById(R.id.details_modifiedOn);
@@ -80,6 +82,22 @@ public class EnquiryDetails extends AppCompatActivity  implements IServiceHandle
         String getInventoryDetailUrl = MessageFormat.format(StringConstants.GET_ENQUIRY_DETAIL,args);
         mAuthTask = new ServiceHandler(getInventoryDetailUrl,this, "getEnqueryDetail",this);
         mAuthTask.execute();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this,EnquiryList.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        //onBackPressed();
+        Intent intent = new Intent(this,EnquiryList.class);
+        startActivity(intent);
+        finish();
+        return true;
     }
 
     @Override

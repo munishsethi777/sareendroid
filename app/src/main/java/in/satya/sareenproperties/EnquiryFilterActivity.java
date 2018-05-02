@@ -37,6 +37,8 @@ public class EnquiryFilterActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_enquiry_filter);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         filterDataMap = new HashMap<String,Object>();
         editText_amount_from = (EditText) findViewById(R.id.amountFrom);
         editText_amount_to = (EditText) findViewById(R.id.amountTo);
@@ -51,27 +53,27 @@ public class EnquiryFilterActivity extends AppCompatActivity implements View.OnC
         spinner_fullfill = (Spinner)findViewById(R.id.isFulfilled);
         spinner_purpose.setAdapter(
                 new ArrayAdapter<PurposeType>(this,
-                        android.R.layout.simple_spinner_item,
+                        R.layout.spinner_row,
                         PurposeType.values()));
 
         spinner_type.setAdapter(
                 new ArrayAdapter<PropertyType>(this,
-                        android.R.layout.simple_spinner_item,
+                        R.layout.spinner_row,
                         PropertyType.values()));
 
         spinner_facing.setAdapter(
                 new ArrayAdapter<FacingType>(this,
-                        android.R.layout.simple_spinner_item,
+                        R.layout.spinner_row,
                         FacingType.values()));
 
         spinner_rental.setAdapter(
                 new ArrayAdapter<YesNO>(this,
-                        android.R.layout.simple_spinner_item,
+                        R.layout.spinner_row,
                         YesNO.values()));
 
         spinner_fullfill.setAdapter(
                 new ArrayAdapter<YesNO>(this,
-                        android.R.layout.simple_spinner_item,
+                        R.layout.spinner_row,
                         YesNO.values()));
     }
 
@@ -148,5 +150,11 @@ public class EnquiryFilterActivity extends AppCompatActivity implements View.OnC
         if(id == R.id.button_apply_filter){
             submitFilter();
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

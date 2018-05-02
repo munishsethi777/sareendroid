@@ -74,6 +74,8 @@ public class InventoryDetails extends AppCompatActivity implements IServiceHandl
         setContentView(R.layout.activity_inventory_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         Intent intent = getIntent();
         mInventorySeq = intent.getIntExtra(StringConstants.SEQ,0);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -115,6 +117,22 @@ public class InventoryDetails extends AppCompatActivity implements IServiceHandl
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this,DashboardActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        //onBackPressed();
+        Intent intent = new Intent(this,DashboardActivity.class);
+        startActivity(intent);
+        finish();
+        return true;
     }
 
     private void populateInventoryDetail(JSONObject response)throws Exception{
