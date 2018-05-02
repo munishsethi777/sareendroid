@@ -1,5 +1,6 @@
 package in.satya.sareenproperties;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Criteria;
@@ -14,7 +15,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -187,6 +190,14 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
         Intent intent = getIntent();
         mInventorySeq = intent.getIntExtra("inventorySeq",0);
         layoutHelper = new LayoutHelper(this);
+        final Activity activity = this;
+        findViewById(R.id.content_layout).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                layoutHelper.hideSoftKeyboard(activity);
+                return false;
+            }
+        });
         buildSpinners();
         executeGetInventoryDetailCall();
     }
@@ -437,7 +448,10 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
             mAuthTask.execute();
         }
     }
-
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+    }
     @Override
     public void onClick(View view) {
         int id = view.getId();
