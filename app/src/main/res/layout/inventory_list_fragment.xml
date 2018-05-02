@@ -24,7 +24,7 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="6"
+            android:layout_weight="7"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingLeft="5dp">
@@ -34,7 +34,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Old House/Plot - 400 sq-yrds"
-                android:textSize="17dp"/>
+                android:textSize="16dp"
+                android:textStyle="bold"/>
             <TextView
                 android:id="@+id/textview_address"
                 android:layout_width="wrap_content"
@@ -45,14 +46,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sanjay Sood - 9814012345"
-                android:layout_marginTop="4dp"/>
+                android:layout_marginTop="4dp"
+                android:textColor="#0071a1"/>
 
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical|right">
             <ImageButton
                 android:id="@+id/imageview_show_detail"
                 android:layout_width="wrap_content"
