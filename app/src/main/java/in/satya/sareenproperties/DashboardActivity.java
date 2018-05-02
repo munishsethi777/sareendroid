@@ -23,6 +23,8 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import in.satya.sareenproperties.Enums.PropertyType;
+import in.satya.sareenproperties.Enums.PropertyUnit;
 import in.satya.sareenproperties.Managers.AdminMgr;
 import in.satya.sareenproperties.services.Interface.IServiceHandler;
 import in.satya.sareenproperties.services.ServiceHandler;
@@ -178,6 +180,9 @@ public class DashboardActivity extends AppCompatActivity
             String propertyType = inventoryJson.getString("propertytype");
             String area = inventoryJson.getString("propertyarea");
             String unit = inventoryJson.getString("propertyunit");
+            if (!unit.isEmpty() && !unit.equals("null")) {
+                unit = PropertyUnit.valueOf(unit).toString();
+            }
             String address1 = inventoryJson.getString("address1");
             String contactPerson = inventoryJson.getString("contactperson");
             String contactMobile = inventoryJson.getString("contactmobile");
