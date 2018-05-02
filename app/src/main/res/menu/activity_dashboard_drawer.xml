@@ -4,19 +4,19 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_share"
+            android:icon="@drawable/ic_achievements"
             android:title="Create Inventory" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Inventory" />
+            android:icon="@drawable/ic_menu_messags"
+            android:title="Inventories" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_menu_chatroom"
             android:title="Create Enquiry" />
         <item
             android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_menu_events"
             android:title="Enquiries" />
     </group>
 
@@ -24,7 +24,7 @@
         <menu>
             <item
                 android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_slideshow"
+                android:icon="@drawable/ic_menu_logout"
                 android:title="Logout" />
         </menu>
     </item>
