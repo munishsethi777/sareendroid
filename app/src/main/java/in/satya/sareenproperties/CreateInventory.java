@@ -127,6 +127,8 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
     private ArrayAdapter rateFactorTypeAdapter;
     private ArrayAdapter propertyOfferAdapter;
     private LayoutHelper layoutHelper;
+    private double mLongitude;
+    private double mLatitude;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -193,23 +195,27 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.getUiSettings().setZoomControlsEnabled(true);
-         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
                 mMap.clear();
                 MarkerOptions marker = new MarkerOptions().position(latLng).title("New Marker");
                 mMap.addMarker(marker);
+                mLongitude = latLng.longitude;
+                mLatitude = latLng.latitude;
             }
         });
          try{
              LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
              Criteria criteria = new Criteria();
              String bestProvider = locationManager.getBestProvider(criteria, true);
-             Location location = locationManager.getLastKnownLocation(bestProvider);
-             if (location != null) {
-                 onLocationChanged(location);
+             if (bestProvider != null) {
+                 Location location = locationManager.getLastKnownLocation(bestProvider);
+                 if (location != null) {
+                     onLocationChanged(location);
+                 }
+                 locationManager.requestLocationUpdates(bestProvider, 20000, 0, this);
              }
-             locationManager.requestLocationUpdates(bestProvider, 20000, 0, this);
          }catch (SecurityException se){
 
          }
@@ -416,8 +422,8 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
                     URLEncoder.encode(rate.getText().toString(), "UTF-8"),
                     URLEncoder.encode(rateFactor, "UTF-8"),
                     URLEncoder.encode(specification.getText().toString(), "UTF-8"),
-                    URLEncoder.encode("1111", "UTF-8"),
-                    URLEncoder.encode("2222", "UTF-8"),
+                    mLatitude,
+                    mLongitude,
                     URLEncoder.encode(purposeType, "UTF-8"),
                     1,
                     URLEncoder.encode(editText_medium_name.getText().toString(), "UTF-8"),
@@ -511,6 +517,15 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
             String mediumName = inventoryJson.getString("mediumname");
             String mediumAddress = inventoryJson.getString("mediumaddress");
             String mediumPhone = inventoryJson.getString("mediumphone");
+            mLatitude = inventoryJson.getDouble("latitude");
+            mLongitude = inventoryJson.getDouble("longitude");
+
+
+            LatLng latLng = new LatLng(mLatitude, mLongitude);
+            mMap.clear();
+            mMap.addMarker(new MarkerOptions().position(latLng));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(12));
 
 
             if(!propertyType.isEmpty()) {
