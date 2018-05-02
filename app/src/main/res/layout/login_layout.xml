@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/inputCont"
                     android:layout_gravity="center"
-                    app:srcCompat="@mipmap/ic_launcher_round" />
+                    app:srcCompat="@drawable/icons8_home128" />
 
 
                     <LinearLayout
@@ -60,22 +60,22 @@
                             android:gravity="center"/>
                     </LinearLayout>
 
-                    <Button
-                        android:id="@+id/btnSignIn"
-                        style="@style/ButtonOrange"
-                        android:layout_marginTop="@dimen/activity_vertical_margin"
-                        android:layout_width="80dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="left"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_marginRight="@dimen/activity_horizontal_margin"
-                        android:layout_marginBottom="20dp"
-                        android:onClick="onClick"
-                        android:text="Login"
-                        android:textAllCaps="false"
-                        android:textStyle="bold"
-                        android:textColor="@android:color/white"
-                        android:layout_below="@+id/inputCont" />
+                <Button
+                    android:id="@+id/btnSignIn"
+                    style="@style/ButtonOrange"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_below="@+id/inputCont"
+                    android:layout_gravity="left"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:onClick="onClick"
+                    android:text="Login"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
