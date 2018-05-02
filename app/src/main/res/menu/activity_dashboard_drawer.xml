@@ -23,6 +23,10 @@
     <item android:title="User Session">
         <menu>
             <item
+                android:id="@+id/nav_change_password"
+                android:icon="@drawable/ic_menu_passowrd"
+                android:title="Change Password" />
+            <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_logout"
                 android:title="Logout" />

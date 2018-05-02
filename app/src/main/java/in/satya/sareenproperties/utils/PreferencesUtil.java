@@ -64,7 +64,7 @@ public class PreferencesUtil {
     }
 
 
-    public int getLoggedInUserSeq(){
+    public int getLoggedInAdminSeq(){
         String value = getPreferences(StringConstants.LOGGED_IN_ADMIN_SEQ);
         int userSeq = 0;
         if(value != null){

@@ -53,7 +53,7 @@ public class AdminMgr {
     }
 
     public Admin getLoggedInAdmin(){
-        int adminSeq  = mPreferencesUtil.getLoggedInUserSeq();
+        int adminSeq  = mPreferencesUtil.getLoggedInAdminSeq();
         Admin admin = adminDataStore.getAdminByUserSeq(adminSeq);
         return admin;
     }
@@ -63,8 +63,8 @@ public class AdminMgr {
         return user.getUserName();
     }
 
-    public int getLoggedInUserSeq(){
-        int userSeq  = mPreferencesUtil.getLoggedInUserSeq();
+    public int getLoggedInAdminSeq(){
+        int userSeq  = mPreferencesUtil.getLoggedInAdminSeq();
         return userSeq;
     }
 
@@ -74,7 +74,7 @@ public class AdminMgr {
     }
 
     public boolean isAdminLoggedIn(){
-        return this.getLoggedInUserSeq() > 0;
+        return this.getLoggedInAdminSeq() > 0;
     }
 
     public boolean isAdminExistsWithUsername(String userName){
