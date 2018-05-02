@@ -30,6 +30,8 @@ import org.json.JSONObject;
 
 import java.text.MessageFormat;
 
+import in.satya.sareenproperties.Enums.PropertyType;
+import in.satya.sareenproperties.Enums.PropertyUnit;
 import in.satya.sareenproperties.services.Interface.IServiceHandler;
 import in.satya.sareenproperties.services.ServiceHandler;
 import in.satya.sareenproperties.utils.LayoutHelper;
@@ -117,8 +119,14 @@ public class InventoryList extends AppCompatActivity implements IServiceHandler 
             JSONObject inventoryJson = inventories.getJSONObject(i);
             final int seq = inventoryJson.getInt("seq");
             String propertyType = inventoryJson.getString("propertytype");
+            if (!propertyType.isEmpty() && !propertyType.equals("null")) {
+                propertyType = PropertyType.valueOf(propertyType).toString();
+            }
             String area = inventoryJson.getString("propertyarea");
             String unit = inventoryJson.getString("propertyunit");
+            if (!unit.isEmpty() && !unit.equals("null")) {
+                unit = PropertyUnit.valueOf(unit).toString();
+            }
             String address1 = inventoryJson.getString("address1");
             String contactPerson = inventoryJson.getString("contactperson");
             String contactMobile = inventoryJson.getString("contactmobile");
