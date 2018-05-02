@@ -1,11 +1,13 @@
 package in.satya.sareenproperties;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -30,6 +32,7 @@ import in.satya.sareenproperties.Enums.PurposeType;
 import in.satya.sareenproperties.services.Interface.IServiceHandler;
 import in.satya.sareenproperties.services.ServiceHandler;
 import in.satya.sareenproperties.utils.DateUtil;
+import in.satya.sareenproperties.utils.LayoutHelper;
 import in.satya.sareenproperties.utils.StringConstants;
 
 public class CreateEnquiryActivity extends AppCompatActivity implements IServiceHandler {
@@ -63,6 +66,7 @@ public class CreateEnquiryActivity extends AppCompatActivity implements IService
     private String SAVE_ENQUIRY = "saveEnquiry";
     private String mCallName;
     private int mEnquirySeq;
+    private LayoutHelper layoutHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +103,15 @@ public class CreateEnquiryActivity extends AppCompatActivity implements IService
         Intent intent = getIntent();
         mEnquirySeq = intent.getIntExtra("enquirySeq",0);
         executeGetEnqueryDetailCall();
+        layoutHelper = new LayoutHelper(this);
+        final Activity activity = this;
+        findViewById(R.id.content_layout).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                layoutHelper.hideSoftKeyboard(activity);
+                return false;
+            }
+        });
     }
 
     private void executeGetEnqueryDetailCall(){
