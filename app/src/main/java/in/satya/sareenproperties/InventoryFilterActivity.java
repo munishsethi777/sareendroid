@@ -1,11 +1,13 @@
 package in.satya.sareenproperties;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -23,6 +25,7 @@ import in.satya.sareenproperties.Enums.MediumType;
 import in.satya.sareenproperties.Enums.PropertyType;
 import in.satya.sareenproperties.Enums.PurposeType;
 import in.satya.sareenproperties.services.Interface.IServiceHandler;
+import in.satya.sareenproperties.utils.LayoutHelper;
 import in.satya.sareenproperties.utils.StringConstants;
 
 public class InventoryFilterActivity extends AppCompatActivity implements View.OnClickListener,IServiceHandler {
@@ -36,7 +39,7 @@ public class InventoryFilterActivity extends AppCompatActivity implements View.O
     private EditText editText_amount_from;
     private EditText editText_amount_to;
     private Map<String,Object>filterDataMap;
-
+    private LayoutHelper layoutHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,15 @@ public class InventoryFilterActivity extends AppCompatActivity implements View.O
         editText_amount_to = (EditText)findViewById(R.id.amountTo);
         filterDataMap = new HashMap<String,Object>();
         buildSpinners();
+        final Activity activity = this;
+        layoutHelper = new LayoutHelper(this);
+        findViewById(R.id.content_layout).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                layoutHelper.hideSoftKeyboard(activity);
+                return false;
+            }
+        });
     }
 
 
