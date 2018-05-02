@@ -3,8 +3,6 @@ package in.satya.sareenproperties;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +27,6 @@ import in.satya.sareenproperties.Managers.AdminMgr;
 import in.satya.sareenproperties.services.Interface.IServiceHandler;
 import in.satya.sareenproperties.services.ServiceHandler;
 import in.satya.sareenproperties.utils.LayoutHelper;
-import in.satya.sareenproperties.utils.PreferencesUtil;
 import in.satya.sareenproperties.utils.StringConstants;
 
 public class DashboardActivity extends AppCompatActivity
@@ -127,10 +124,17 @@ public class DashboardActivity extends AppCompatActivity
             startActivity(intent);
         } else if (id == R.id.nav_share) {
             logoutConfirm();
+        }else if (id == R.id.nav_change_password) {
+            Intent intent = new Intent(this,ChangePassword.class);
+            startActivity(intent);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void changePassword(){
+
     }
 
     public void logoutConfirm() {
