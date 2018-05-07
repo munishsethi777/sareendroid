@@ -146,6 +146,24 @@
                                             android:text="Broker"
                                             style="@style/detailsText"/>
                                 </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    style="@style/detailsBlock">
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="Offer"
+                                        style="@style/detailsHeader"/>
+                                    <TextView
+                                        android:id="@+id/details_offer"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="Broker"
+                                        style="@style/detailsText"/>
+                                </LinearLayout>
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -160,7 +178,7 @@
                                         <TextView
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:text="Property Type"
+                                            android:text="Plot No"
                                             style="@style/detailsHeader"/>
                                         <TextView
                                             android:id="@+id/details_plotNumber"

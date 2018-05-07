@@ -17,6 +17,7 @@ import java.text.MessageFormat;
 import java.util.Date;
 
 import in.satya.sareenproperties.Enums.FacingType;
+import in.satya.sareenproperties.Enums.PropertyOfferType;
 import in.satya.sareenproperties.Enums.PropertyType;
 import in.satya.sareenproperties.Enums.PropertyUnit;
 import in.satya.sareenproperties.Enums.PurposeType;
@@ -42,7 +43,7 @@ public class EnquiryDetails extends AppCompatActivity  implements IServiceHandle
     private TextView textView_contact_address;
     private TextView textView_amount;
     private TextView textView_spec;
-    private TextView rental;
+    private TextView textView_offer;
     private LayoutHelper layoutHelper;
     private ServiceHandler mAuthTask;
     private int mEnquirySeq;
@@ -70,7 +71,7 @@ public class EnquiryDetails extends AppCompatActivity  implements IServiceHandle
         textView_contact_address  = (TextView)findViewById(R.id.details_address);
         textView_amount = (TextView)findViewById(R.id.details_amount);
         textView_spec = (TextView)findViewById(R.id.details_specifications);
-        rental = (TextView)findViewById(R.id.details_isrental);
+        textView_offer = (TextView)findViewById(R.id.details_offer);
         layoutHelper = new LayoutHelper(this);
         Intent intent = getIntent();
         mEnquirySeq = intent.getIntExtra(StringConstants.SEQ,0);
@@ -153,7 +154,10 @@ public class EnquiryDetails extends AppCompatActivity  implements IServiceHandle
         }
         String referredBy = inventoryJson.getString("referredby");
         String expectedAmount = inventoryJson.getString("expectedamount");
-        int isrental = inventoryJson.getInt("isrental");
+        String offerType = inventoryJson.getString("propertyoffer");
+        if (!offerType.isEmpty() && !offerType.equals("null")) {
+            offerType = PropertyOfferType.valueOf(offerType).toString();
+        }
         String specifications = inventoryJson.getString("specifications");
 
         textView_address.setText(address1);
@@ -172,11 +176,7 @@ public class EnquiryDetails extends AppCompatActivity  implements IServiceHandle
         textView_mobile.setText(contactMobile);
         textView_contact_address.setText(contactAddress);
         textView_amount.setText(expectedAmount + "/-");
-        if (isrental > 0) {
-            rental.setText("Yes");
-        } else {
-            rental.setText("No");
-        }
+        textView_offer.setText(offerType);
         textView_spec.setText(specifications);
     }
 

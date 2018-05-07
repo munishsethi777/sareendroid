@@ -26,6 +26,7 @@ import java.util.List;
 
 import in.satya.sareenproperties.Enums.FacingType;
 import in.satya.sareenproperties.Enums.MediumType;
+import in.satya.sareenproperties.Enums.PropertyOfferType;
 import in.satya.sareenproperties.Enums.PropertyType;
 import in.satya.sareenproperties.Enums.PropertyUnit;
 import in.satya.sareenproperties.Enums.PurposeType;
@@ -33,12 +34,14 @@ import in.satya.sareenproperties.services.Interface.IServiceHandler;
 import in.satya.sareenproperties.services.ServiceHandler;
 import in.satya.sareenproperties.utils.DateUtil;
 import in.satya.sareenproperties.utils.LayoutHelper;
+import in.satya.sareenproperties.utils.PreferencesUtil;
 import in.satya.sareenproperties.utils.StringConstants;
 
 public class CreateEnquiryActivity extends AppCompatActivity implements IServiceHandler {
     public static final String GET_ENQUIRY_DETAIL = "GET_ENQUIRY_DETAIL";
     private Spinner spinner_property_type;
     private Spinner spinner_purpose;
+    private Spinner spinner_offer_type;
     private EditText editText_enquiry;
     private EditText editText_landmark;
     private EditText editText_area;
@@ -51,13 +54,13 @@ public class CreateEnquiryActivity extends AppCompatActivity implements IService
     private EditText editText_mobile;
     private EditText editText_address;
     public EditText editText_total_amount;
-    private CheckBox checkBox_rental;
     private CheckBox checkBox_fullfill;
     private EditText editText_specifications;
     private ArrayAdapter propertyAdapter;
     private ArrayAdapter propertyUnitAdapter;
     private ArrayAdapter purposeTypeAdapter;
     private ArrayAdapter facingTypeAdapter;
+    private ArrayAdapter propertyOfferTypeAdapter;
 
     public Spinner spinner_crores;
     public Spinner spinner_lakhs;
@@ -67,6 +70,7 @@ public class CreateEnquiryActivity extends AppCompatActivity implements IService
     private String mCallName;
     private int mEnquirySeq;
     private LayoutHelper layoutHelper;
+    private PreferencesUtil preferencesUtil;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,8 +101,8 @@ public class CreateEnquiryActivity extends AppCompatActivity implements IService
         editText_mobile = (EditText)findViewById(R.id.mobile);
         editText_address = (EditText)findViewById(R.id.address);
         checkBox_fullfill = (CheckBox)findViewById(R.id.isFulfilled);
-        checkBox_rental = (CheckBox)findViewById(R.id.isRental);
         editText_specifications = (EditText)findViewById(R.id.specifications);
+        preferencesUtil = PreferencesUtil.getInstance(this);
         buildSpinners();
         Intent intent = getIntent();
         mEnquirySeq = intent.getIntExtra("enquirySeq",0);
@@ -127,6 +131,7 @@ public class CreateEnquiryActivity extends AppCompatActivity implements IService
         spinner_purpose = (Spinner) findViewById(R.id.purpose);
         spinner_unit = (Spinner)findViewById(R.id.units);
         spinner_facing = (Spinner)findViewById(R.id.facing);
+        spinner_offer_type = (Spinner)findViewById(R.id.propertyoffer);
         spinner_crores = (Spinner)findViewById(R.id.crores);
         spinner_thousands = (Spinner)findViewById(R.id.thousands);
         spinner_lakhs = (Spinner)findViewById(R.id.lakhs);
@@ -150,6 +155,11 @@ public class CreateEnquiryActivity extends AppCompatActivity implements IService
                 R.layout.spinner_row,
                 FacingType.values());
         spinner_facing.setAdapter(facingTypeAdapter);
+
+        propertyOfferTypeAdapter = new ArrayAdapter<PropertyOfferType>(this,
+                R.layout.spinner_row,
+                PropertyOfferType.values());
+        spinner_offer_type.setAdapter(propertyOfferTypeAdapter);
 
         List numbers = new ArrayList<Integer>();
         for (int i = 0; i <= 99; i++) {
@@ -179,15 +189,15 @@ public class CreateEnquiryActivity extends AppCompatActivity implements IService
         String length = editText_length.getText().toString();
         String breadth = editText_breadth.getText().toString();
         String facingType = FacingType.getNameByValue(spinner_facing.getSelectedItem().toString());
+        String propertyOffer = PropertyOfferType.getNameByValue(
+                spinner_offer_type.getSelectedItem().toString());
         String referred = editText_referred.getText().toString();
         String name = editText_name.getText().toString();
         String mobile =  editText_mobile.getText().toString();
         String expectedAmount = editText_total_amount.getText().toString();
         String address = editText_address.getText().toString();
         String isRental = "0";
-        if(checkBox_rental.isChecked()){
-            isRental = "1";
-        }
+        int adminSeq = preferencesUtil.getLoggedInAdminSeq();
         String isFullfill = "0";
         if(checkBox_fullfill.isChecked()){
             isFullfill = "1";
@@ -210,7 +220,8 @@ public class CreateEnquiryActivity extends AppCompatActivity implements IService
                 URLEncoder.encode(isFullfill, "UTF-8"),
                 URLEncoder.encode(expectedAmount, "UTF-8"),
                 URLEncoder.encode(spec, "UTF-8"),
-                1,mEnquirySeq};
+                URLEncoder.encode(propertyOffer, "UTF-8"),
+                adminSeq,mEnquirySeq,};
         String saveEnquiryUrl = MessageFormat.format(StringConstants.SAVE_ENQUIRY,args);
         mAuthTask = new ServiceHandler(saveEnquiryUrl,this, SAVE_ENQUIRY,this);
         mAuthTask.execute();
@@ -230,17 +241,20 @@ public class CreateEnquiryActivity extends AppCompatActivity implements IService
         String facing = enquiryJson.getString("facing");
         String referredBy = enquiryJson.getString("referredby");
         String expectedAmount = enquiryJson.getString("expectedamount");
-        int isrental = enquiryJson.getInt("isrental");
         int isFullfill = enquiryJson.getInt("isfullfilled");
         String specifications = enquiryJson.getString("specifications");
         String length = enquiryJson.getString("dimensionlength");
         String breadth = enquiryJson.getString("dimensionbreadth");
+        String propertyOffer = enquiryJson.getString("propertyoffer");
+
 
         editText_enquiry.setText(address);
         if(!propertyType.isEmpty()) {
             spinner_property_type.setSelection(propertyAdapter.getPosition(PropertyType.valueOf(propertyType)));
         }
-
+        if(!propertyOffer.isEmpty()){
+            spinner_offer_type.setSelection(propertyOfferTypeAdapter.getPosition(PropertyOfferType.valueOf(propertyOffer)));
+        }
         if(!purposeType.isEmpty() && !purposeType.equals("null")) {
             spinner_purpose.setSelection(purposeTypeAdapter.getPosition(PurposeType.valueOf(purposeType)));
         }
@@ -259,7 +273,6 @@ public class CreateEnquiryActivity extends AppCompatActivity implements IService
         editText_mobile.setText(contactMobile);
         editText_address.setText(contactAddress);
         editText_total_amount.setText(expectedAmount);
-        checkBox_rental.setChecked(isrental > 0);
         checkBox_fullfill.setChecked(isFullfill > 0);
         editText_specifications.setText(specifications);
         editText_length.setText(length);

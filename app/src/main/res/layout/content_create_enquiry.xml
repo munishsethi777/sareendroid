@@ -191,6 +191,29 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="6dp">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingLeft="6dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Offer"/>
+                    <Spinner
+                        android:id="@+id/propertyoffer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/formInput"
+                        android:spinnerMode="dialog"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="6dp">
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -312,12 +335,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="6dp">
-                <CheckBox
-                    android:id="@+id/isRental"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Rental"/>
                 <CheckBox
                     android:id="@+id/isFulfilled"
                     android:layout_width="0dp"
