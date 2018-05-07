@@ -19,6 +19,7 @@ import java.util.Map;
 
 import in.satya.sareenproperties.Enums.FacingType;
 import in.satya.sareenproperties.Enums.MediumType;
+import in.satya.sareenproperties.Enums.PropertyOfferType;
 import in.satya.sareenproperties.Enums.PropertyType;
 import in.satya.sareenproperties.Enums.PurposeType;
 import in.satya.sareenproperties.Enums.YesNO;
@@ -28,9 +29,9 @@ import in.satya.sareenproperties.utils.StringConstants;
 public class EnquiryFilterActivity extends AppCompatActivity implements View.OnClickListener {
     private Spinner spinner_type;
     private Spinner spinner_facing;
-    private Spinner spinner_rental;
     private Spinner spinner_fullfill;
     private Spinner spinner_purpose;
+    private Spinner spinner_offer;
     private EditText editText_amount_from;
     private EditText editText_amount_to;
     private Map<String,Object> filterDataMap;
@@ -62,8 +63,8 @@ public class EnquiryFilterActivity extends AppCompatActivity implements View.OnC
         spinner_purpose = (Spinner) findViewById(R.id.purpose);
         spinner_type = (Spinner) findViewById(R.id.propertytype);
         spinner_facing = (Spinner)findViewById(R.id.facing);
-        spinner_rental = (Spinner)findViewById(R.id.isRental);
         spinner_fullfill = (Spinner)findViewById(R.id.isFulfilled);
+        spinner_offer = (Spinner)findViewById(R.id.propertyoffer);
         spinner_purpose.setAdapter(
                 new ArrayAdapter<PurposeType>(this,
                         R.layout.spinner_row,
@@ -74,15 +75,15 @@ public class EnquiryFilterActivity extends AppCompatActivity implements View.OnC
                         R.layout.spinner_row,
                         PropertyType.values()));
 
+        spinner_offer.setAdapter(
+                new ArrayAdapter<PropertyOfferType>(this,
+                        R.layout.spinner_row,
+                        PropertyOfferType.values()));
+
         spinner_facing.setAdapter(
                 new ArrayAdapter<FacingType>(this,
                         R.layout.spinner_row,
                         FacingType.values()));
-
-        spinner_rental.setAdapter(
-                new ArrayAdapter<YesNO>(this,
-                        R.layout.spinner_row,
-                        YesNO.values()));
 
         spinner_fullfill.setAdapter(
                 new ArrayAdapter<YesNO>(this,
@@ -101,9 +102,10 @@ public class EnquiryFilterActivity extends AppCompatActivity implements View.OnC
         String type = PropertyType.getNameByValue(spinner_type.getSelectedItem().toString());
         String purpose = PurposeType.getNameByValue(spinner_purpose.getSelectedItem().toString());
         String facing = FacingType.getNameByValue(spinner_facing.getSelectedItem().toString());
+        String propertyOffer = PropertyOfferType.getNameByValue(spinner_offer.getSelectedItem().toString());
         String amountFrom = editText_amount_from.getText().toString();
         String amountTo = editText_amount_to.getText().toString();
-        String isRental = YesNO.getNameByValue(spinner_rental.getSelectedItem().toString());
+
         String isFullfill = YesNO.getNameByValue(spinner_fullfill.getSelectedItem().toString());
         int i = 0;
         String condition = "CONTAINS";
@@ -111,16 +113,15 @@ public class EnquiryFilterActivity extends AppCompatActivity implements View.OnC
         if(!type.isEmpty()) {
             fillFilterRequestData("propertytype",type,condition,filterOperator,i++);
         }
+        if(!propertyOffer.isEmpty()) {
+            fillFilterRequestData("propertyoffer",propertyOffer,condition,filterOperator,i++);
+        }
         if(!purpose.isEmpty()) {
             fillFilterRequestData("purpose",purpose,condition,filterOperator,i++);
         }
 
         if(!facing.isEmpty()) {
             fillFilterRequestData("facing",facing,condition,filterOperator,i++);
-        }
-
-        if(!isRental.isEmpty()) {
-            fillFilterRequestData("isrental",isRental,condition,filterOperator,i++);
         }
 
         if(!isFullfill.isEmpty()) {

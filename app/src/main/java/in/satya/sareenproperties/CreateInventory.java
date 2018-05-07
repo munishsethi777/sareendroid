@@ -58,6 +58,7 @@ import in.satya.sareenproperties.services.Interface.IServiceHandler;
 import in.satya.sareenproperties.services.ServiceHandler;
 import in.satya.sareenproperties.utils.DateUtil;
 import in.satya.sareenproperties.utils.LayoutHelper;
+import in.satya.sareenproperties.utils.PreferencesUtil;
 import in.satya.sareenproperties.utils.StringConstants;
 
 public class CreateInventory extends AppCompatActivity implements IServiceHandler, OnMapReadyCallback, LocationListener,View.OnClickListener {
@@ -132,6 +133,7 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
     private LayoutHelper layoutHelper;
     private double mLongitude;
     private double mLatitude;
+    private PreferencesUtil preferencesUtil;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -198,6 +200,7 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
                 return false;
             }
         });
+        preferencesUtil = PreferencesUtil.getInstance(this);
         buildSpinners();
         executeGetInventoryDetailCall();
     }
@@ -436,7 +439,7 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
                     mLatitude,
                     mLongitude,
                     URLEncoder.encode(purposeType, "UTF-8"),
-                    1,
+                    preferencesUtil.getLoggedInAdminSeq(),
                     URLEncoder.encode(editText_medium_name.getText().toString(), "UTF-8"),
                     URLEncoder.encode(editText_medium_address.getText().toString(), "UTF-8"),
                     URLEncoder.encode(editText_medium_phone.getText().toString(), "UTF-8"),

@@ -47,6 +47,30 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:text="Offer"
+                    style="@style/formTitle"/>
+                <Spinner
+                    android:id="@+id/propertyoffer"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:spinnerMode="dialog"
+                    android:layout_height="wrap_content">
+                </Spinner>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimaryDark"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="6dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:text="PURPOSE"
                     style="@style/formTitle"/>
                 <Spinner
@@ -131,24 +155,7 @@
                 android:background="@color/colorPrimaryDark"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="6dp">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="RENTAL"
-                    style="@style/formTitle"/>
-                <Spinner
-                    android:id="@+id/isRental"
-                    android:layout_width="0dp"
-                    android:layout_weight="3"
-                    android:spinnerMode="dialog"
-                    android:layout_height="wrap_content">
-                </Spinner>
-            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"

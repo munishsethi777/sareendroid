@@ -306,7 +306,7 @@
                         android:text="Rental"
                         style="@style/detailsHeader"/>
                     <TextView
-                        android:id="@+id/details_isrental"
+                        android:id="@+id/details_offer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="YES"
