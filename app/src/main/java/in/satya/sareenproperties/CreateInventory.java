@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -96,6 +97,7 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
 
     //Pricing
     private EditText rate;
+    private CheckBox isAvailable;
     private EditText specification;
 
     private Spinner spinner_property_type;
@@ -187,7 +189,7 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
         editText_medium_name = (EditText)findViewById(R.id.mediumname);
         editText_medium_address = (EditText)findViewById(R.id.mediumaddress);
         editText_medium_phone = (EditText)findViewById(R.id.mediumphone);
-
+        isAvailable  = (CheckBox) findViewById(R.id.isAvailable);
         imageView_property_image = (ImageView)findViewById(R.id.property_image);
         Intent intent = getIntent();
         mInventorySeq = intent.getIntExtra("inventorySeq",0);
@@ -410,6 +412,10 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
             String propertySide = PropertySideType.getNameByValue(spinner_property_side.getSelectedItem().toString());
             String rateFactor = RateFactorType.getNameByValue(spinner_rate_factor.getSelectedItem().toString());
             String purposeType = PurposeType.getNameByValue(spinner_purpose.getSelectedItem().toString());
+            int available = 0;
+            if(isAvailable.isChecked()){
+                available = 1;
+            }
             Object[] args = {URLEncoder.encode(contact_name.getText().toString(), "UTF-8"),
                     URLEncoder.encode(contact_mobile.getText().toString(), "UTF-8"),
                     URLEncoder.encode(refferedBy.getText().toString(), "UTF-8"),
@@ -443,6 +449,7 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
                     URLEncoder.encode(editText_medium_name.getText().toString(), "UTF-8"),
                     URLEncoder.encode(editText_medium_address.getText().toString(), "UTF-8"),
                     URLEncoder.encode(editText_medium_phone.getText().toString(), "UTF-8"),
+                    available,
                     mInventorySeq};
             String dashboardCountUrl = MessageFormat.format(StringConstants.SAVE_INVENTORY,args);
             mAuthTask = new ServiceHandler(dashboardCountUrl,this, SAVE_INVENTORY,this);
@@ -536,6 +543,7 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
             String mediumPhone = inventoryJson.getString("mediumphone");
             mLatitude = inventoryJson.getDouble("latitude");
             mLongitude = inventoryJson.getDouble("longitude");
+            int availability =  inventoryJson.getInt("isavailable");
 
 
             LatLng latLng = new LatLng(mLatitude, mLongitude);
@@ -587,6 +595,7 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
             this.editText_medium_name.setText(mediumName);
             this.editText_medium_phone.setText(mediumPhone);
             this.editText_medium_address.setText(mediumAddress);
+            isAvailable.setChecked(availability > 0);
     }
 
     @Override
