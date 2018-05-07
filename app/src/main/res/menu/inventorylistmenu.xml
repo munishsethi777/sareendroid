@@ -4,12 +4,12 @@
     <item
         android:id="@+id/action_add"
         android:icon="@drawable/icons_plus"
-        android:title="Filter"
+        android:title="Add New"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_refresh"
         android:icon="@drawable/icons_synchronize"
-        android:title="Filter"
+        android:title="Reload"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_filter"

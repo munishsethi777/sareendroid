@@ -21,7 +21,8 @@
                             android:src="@mipmap/building"/>
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="80dp"
+                            android:layout_height="wrap_content"
+                            android:minHeight="80dp"
                             android:background="@android:color/holo_blue_dark"
                             android:padding="6dp"
                             android:orientation="horizontal">
@@ -106,28 +107,35 @@
                                 </LinearLayout>
 
                         </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            style="@style/detailsBlock">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Property Type"
+                                style="@style/detailsHeader"/>
+                            <TextView
+                                android:id="@+id/details_type"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Old House/Plot"
+                                style="@style/detailsText"/>
+                        </LinearLayout>
+
+
+                    </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="10dp">
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="vertical"
-                                    style="@style/detailsBlock">
-                                        <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:text="Property Type"
-                                            style="@style/detailsHeader"/>
-                                        <TextView
-                                            android:id="@+id/details_type"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:text="Old House/Plot"
-                                            style="@style/detailsText"/>
-                                </LinearLayout>
+
                                 <LinearLayout
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
@@ -155,13 +163,13 @@
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="Offer"
+                                        android:text="For"
                                         style="@style/detailsHeader"/>
                                     <TextView
                                         android:id="@+id/details_offer"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="Broker"
+                                        android:text="offer"
                                         style="@style/detailsText"/>
                                 </LinearLayout>
                         </LinearLayout>

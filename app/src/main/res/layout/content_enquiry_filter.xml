@@ -47,7 +47,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Offer"
+                    android:text="FOR"
                     style="@style/formTitle"/>
                 <Spinner
                     android:id="@+id/propertyoffer"

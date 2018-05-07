@@ -198,7 +198,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Offer"
+                            android:text="For"
                             style="@style/spinnerHeader"
                             android:paddingBottom="8dp"
                             android:paddingLeft="2dp"/>
