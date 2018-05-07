@@ -26,6 +26,7 @@ import java.util.Date;
 import in.satya.sareenproperties.Enums.DocumentType;
 import in.satya.sareenproperties.Enums.FacingType;
 import in.satya.sareenproperties.Enums.MediumType;
+import in.satya.sareenproperties.Enums.PropertyOfferType;
 import in.satya.sareenproperties.Enums.PropertyType;
 import in.satya.sareenproperties.Enums.PropertyUnit;
 import in.satya.sareenproperties.Enums.PurposeType;
@@ -68,6 +69,7 @@ public class InventoryDetails extends AppCompatActivity implements IServiceHandl
     private TextView textView_time;
     private TextView textView_availability;
     private TextView textView_spec;
+    private TextView textView_offer_type;
     private ImageView imageView_property;
     private LayoutHelper layoutHelper;
     private ImageButton imageButton_showLocation;
@@ -111,6 +113,7 @@ public class InventoryDetails extends AppCompatActivity implements IServiceHandl
         textView_time = (TextView)findViewById(R.id.details_time);
         textView_availability = (TextView)findViewById(R.id.details_availability);
         textView_spec = (TextView)findViewById(R.id.details_specifications);
+        textView_offer_type = (TextView)findViewById(R.id.details_offer);
         imageView_property = (ImageView)findViewById(R.id.details_imageView);
         imageButton_showLocation = (ImageButton)findViewById(R.id.imageButton_showLocation);
         layoutHelper = new LayoutHelper(this);
@@ -165,6 +168,10 @@ public class InventoryDetails extends AppCompatActivity implements IServiceHandl
         String medium = inventoryJson.getString("medium");
         if (!medium.isEmpty() && !medium.equals("null")) {
             medium = MediumType.valueOf(medium).toString();
+        }
+        String propertyoffer = inventoryJson.getString("propertyoffer");
+        if (!propertyoffer.isEmpty() && !propertyoffer.equals("null")) {
+            propertyoffer = PropertyOfferType.valueOf(propertyoffer).toString();
         }
         String plotNumber = inventoryJson.getString("plotnumber");
         String purpose = inventoryJson.getString("purpose");
@@ -223,6 +230,7 @@ public class InventoryDetails extends AppCompatActivity implements IServiceHandl
         textView_rate.setText(rate + "/-");
         textView_amount.setText(expectedAmount + "/-");
         textView_time.setText(time);
+        textView_offer_type.setText(propertyoffer);
         if (availability > 0) {
             textView_availability.setText("Available");
         } else {

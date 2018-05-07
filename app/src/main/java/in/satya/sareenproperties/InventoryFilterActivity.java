@@ -22,6 +22,7 @@ import java.util.Map;
 
 import in.satya.sareenproperties.Enums.FacingType;
 import in.satya.sareenproperties.Enums.MediumType;
+import in.satya.sareenproperties.Enums.PropertyOfferType;
 import in.satya.sareenproperties.Enums.PropertyType;
 import in.satya.sareenproperties.Enums.PurposeType;
 import in.satya.sareenproperties.services.Interface.IServiceHandler;
@@ -31,6 +32,7 @@ import in.satya.sareenproperties.utils.StringConstants;
 public class InventoryFilterActivity extends AppCompatActivity implements View.OnClickListener,IServiceHandler {
     private Button button_apply_filter;
     private Spinner spinner_type;
+    private Spinner spinner_offer;
     private Spinner spinner_facing;
     private Spinner spinner_medium;
     private Spinner spinner_purpose;
@@ -80,12 +82,15 @@ public class InventoryFilterActivity extends AppCompatActivity implements View.O
         spinner_purpose = (Spinner) findViewById(R.id.purpose);
         spinner_medium = (Spinner) findViewById(R.id.medium);
         spinner_facing = (Spinner) findViewById(R.id.facing);
+        spinner_offer = (Spinner)findViewById(R.id.propertyoffer);
         spinner_type.setAdapter(
                 new ArrayAdapter<PropertyType>(this,
                         R.layout.spinner_row,
                         PropertyType.values()));
 
-
+        spinner_offer.setAdapter(new ArrayAdapter<PropertyOfferType>(this,
+                R.layout.spinner_row,
+                PropertyOfferType.values()));
         spinner_purpose.setAdapter(
                 new ArrayAdapter<PurposeType>(this,
                         R.layout.spinner_row,
@@ -100,6 +105,7 @@ public class InventoryFilterActivity extends AppCompatActivity implements View.O
                 new ArrayAdapter<FacingType>(this,
                         R.layout.spinner_row,
                         FacingType.values()));
+
     }
 
 
@@ -112,6 +118,7 @@ public class InventoryFilterActivity extends AppCompatActivity implements View.O
 
     private String getFilterRequestUrl(){
         String type = PropertyType.getNameByValue(spinner_type.getSelectedItem().toString());
+        String offer = PropertyOfferType.getNameByValue(spinner_offer.getSelectedItem().toString());
         String purpose = PurposeType.getNameByValue(spinner_purpose.getSelectedItem().toString());
         String medium = MediumType.getNameByValue(spinner_medium.getSelectedItem().toString());
         String facing = FacingType.getNameByValue(spinner_facing.getSelectedItem().toString());
@@ -123,6 +130,9 @@ public class InventoryFilterActivity extends AppCompatActivity implements View.O
         int filterOperator = 0;
         if(!type.isEmpty()) {
             fillFilterRequestData("propertytype",type,condition,filterOperator,i++);
+        }
+        if(!offer.isEmpty()){
+            fillFilterRequestData("propertyoffer",offer,condition,filterOperator,i++);
         }
         if(!purpose.isEmpty()) {
             fillFilterRequestData("purpose",purpose,condition,filterOperator,i++);
