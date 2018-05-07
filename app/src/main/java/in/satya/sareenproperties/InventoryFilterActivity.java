@@ -25,6 +25,7 @@ import in.satya.sareenproperties.Enums.MediumType;
 import in.satya.sareenproperties.Enums.PropertyOfferType;
 import in.satya.sareenproperties.Enums.PropertyType;
 import in.satya.sareenproperties.Enums.PurposeType;
+import in.satya.sareenproperties.Enums.YesNO;
 import in.satya.sareenproperties.services.Interface.IServiceHandler;
 import in.satya.sareenproperties.utils.LayoutHelper;
 import in.satya.sareenproperties.utils.StringConstants;
@@ -36,6 +37,7 @@ public class InventoryFilterActivity extends AppCompatActivity implements View.O
     private Spinner spinner_facing;
     private Spinner spinner_medium;
     private Spinner spinner_purpose;
+    private Spinner spinner_is_available;
 
     private EditText editText_address;
     private EditText editText_amount_from;
@@ -55,6 +57,7 @@ public class InventoryFilterActivity extends AppCompatActivity implements View.O
         editText_address = (EditText)findViewById(R.id.address);
         editText_amount_from = (EditText)findViewById(R.id.amountFrom);
         editText_amount_to = (EditText)findViewById(R.id.amountTo);
+
         filterDataMap = new HashMap<String,Object>();
         buildSpinners();
         final Activity activity = this;
@@ -83,6 +86,7 @@ public class InventoryFilterActivity extends AppCompatActivity implements View.O
         spinner_medium = (Spinner) findViewById(R.id.medium);
         spinner_facing = (Spinner) findViewById(R.id.facing);
         spinner_offer = (Spinner)findViewById(R.id.propertyoffer);
+        spinner_is_available = (Spinner)findViewById(R.id.isAvailable);
         spinner_type.setAdapter(
                 new ArrayAdapter<PropertyType>(this,
                         R.layout.spinner_row,
@@ -106,6 +110,10 @@ public class InventoryFilterActivity extends AppCompatActivity implements View.O
                         R.layout.spinner_row,
                         FacingType.values()));
 
+        spinner_is_available.setAdapter(
+                new ArrayAdapter<YesNO>(this,
+                        R.layout.spinner_row,
+                        YesNO.values()));
     }
 
 
@@ -128,6 +136,11 @@ public class InventoryFilterActivity extends AppCompatActivity implements View.O
         int i = 0;
         String condition = "CONTAINS";
         int filterOperator = 0;
+        String isAvailable = YesNO.getNameByValue(spinner_is_available.getSelectedItem().toString());
+
+        if(!isAvailable.isEmpty()) {
+            fillFilterRequestData("isavailable",isAvailable,condition,filterOperator,i++);
+        }
         if(!type.isEmpty()) {
             fillFilterRequestData("propertytype",type,condition,filterOperator,i++);
         }

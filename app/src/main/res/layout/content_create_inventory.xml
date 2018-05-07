@@ -598,22 +598,38 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
+                    android:orientation="horizontal">
+                    <LinearLayout
                         android:layout_height="wrap_content"
-                        android:text="Rate Factor"
-                        style="@style/spinnerHeader"
-                        android:paddingBottom="8dp"
-                        android:paddingLeft="2dp"/>
-                    <Spinner
-                        android:id="@+id/ratefactor"
-                        style="@style/formInput"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Rate Factor"
+                            style="@style/spinnerHeader"
+                            android:paddingBottom="8dp"
+                            android:paddingLeft="2dp"/>
+                        <Spinner
+                            android:id="@+id/ratefactor"
+                            style="@style/formInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:spinnerMode="dialog"/>
+                    </LinearLayout>
+                    <LinearLayout
                         android:layout_height="wrap_content"
-                        android:spinnerMode="dialog"/>
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:orientation="vertical">
+                        <CheckBox
+                            android:id="@+id/isAvailable"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Availability"/>
+                    </LinearLayout>
                 </LinearLayout>
-
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
