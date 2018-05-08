@@ -219,7 +219,7 @@ public class InventoryDetails extends AppCompatActivity implements IServiceHandl
         textView_city.setText(city);
         textView_landmark.setText(landMark);
         textView_area.setText(area + " " + unit);
-        textView_dimensions.setText(dimensionLength + " x " + dimensionBreadth + " " + unit);
+        textView_dimensions.setText(dimensionLength + " x " + dimensionBreadth);
         textView_facing.setText(facing);
         textView_document.setText(documentation);
         textView_contact_name.setText(contactPerson);
