@@ -30,6 +30,7 @@ import in.satya.sareenproperties.Enums.PropertyOfferType;
 import in.satya.sareenproperties.Enums.PropertyType;
 import in.satya.sareenproperties.Enums.PropertyUnit;
 import in.satya.sareenproperties.Enums.PurposeType;
+import in.satya.sareenproperties.Enums.RateFactorType;
 import in.satya.sareenproperties.services.Interface.IServiceHandler;
 import in.satya.sareenproperties.services.ServiceHandler;
 import in.satya.sareenproperties.utils.DateUtil;
@@ -68,6 +69,7 @@ public class InventoryDetails extends AppCompatActivity implements IServiceHandl
     private TextView textView_amount;
     private TextView textView_time;
     private TextView textView_availability;
+    private TextView textView_ratefactor;
     private TextView textView_spec;
     private TextView textView_offer_type;
     private ImageView imageView_property;
@@ -112,6 +114,7 @@ public class InventoryDetails extends AppCompatActivity implements IServiceHandl
         textView_amount = (TextView)findViewById(R.id.details_amount);
         textView_time = (TextView)findViewById(R.id.details_time);
         textView_availability = (TextView)findViewById(R.id.details_availability);
+        textView_ratefactor = (TextView)findViewById(R.id.ratefactor);
         textView_spec = (TextView)findViewById(R.id.details_specifications);
         textView_offer_type = (TextView)findViewById(R.id.details_offer);
         imageView_property = (ImageView)findViewById(R.id.details_imageView);
@@ -202,7 +205,10 @@ public class InventoryDetails extends AppCompatActivity implements IServiceHandl
         String specifications = inventoryJson.getString("specifications");
         final double latitude = inventoryJson.getDouble("latitude");
         final double longitude = inventoryJson.getDouble("longitude");
-
+        String ratefactor = inventoryJson.getString("ratefactor");
+        if (!ratefactor.isEmpty() && !ratefactor.equals("null")) {
+            ratefactor = RateFactorType.valueOf(ratefactor).toString();
+        }
         final String propertyDetail = propertyType + " - " + area + " " + unit;
         textView_property_detail.setText(propertyDetail);
         textView_contact_detail.setText(contactPerson + "-" + contactMobile);
@@ -236,6 +242,7 @@ public class InventoryDetails extends AppCompatActivity implements IServiceHandl
         } else {
             textView_availability.setText("Not Available");
         }
+        textView_ratefactor.setText(ratefactor);
         textView_spec.setText(specifications);
         imageButton_showLocation.setOnClickListener(new View.OnClickListener() {
             @Override

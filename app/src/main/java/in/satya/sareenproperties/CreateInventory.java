@@ -541,6 +541,7 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
             String mediumName = inventoryJson.getString("mediumname");
             String mediumAddress = inventoryJson.getString("mediumaddress");
             String mediumPhone = inventoryJson.getString("mediumphone");
+            String ratefactor = inventoryJson.getString("ratefactor");
             mLatitude = inventoryJson.getDouble("latitude");
             mLongitude = inventoryJson.getDouble("longitude");
             int availability =  inventoryJson.getInt("isavailable");
@@ -585,6 +586,9 @@ public class CreateInventory extends AppCompatActivity implements IServiceHandle
             }
             if(!documentation.isEmpty() && !documentation.equals("null")) {
                 this.spinner_document_type.setSelection(documentTypeAdapter.getPosition(DocumentType.valueOf(documentation)));
+            }
+            if(!ratefactor.isEmpty() && !ratefactor.equals("null")) {
+                this.spinner_rate_factor.setSelection(rateFactorTypeAdapter.getPosition(RateFactorType.valueOf(ratefactor)));
             }
             this.refferedBy.setText(referredBy);
             this.organisation.setText(organisation);
