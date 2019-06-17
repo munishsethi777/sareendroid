@@ -9,4 +9,11 @@
     <color name="details_header">#a52da6fc</color>
     <color name="details_text">#6b6b6b</color>
     <color name="right_profile">#e180A684</color>
+    <color name="right_notes_topbar">#946390C6</color>
+    <color name="right_notes">#e16390C6</color>
+    <color name="lp_block_backround">#aaffffff</color>
+    <color name="DarkDarkgrey">#565656</color>
+    <color name="profile16background">#f1f5f8</color>
+    <color name="button_yellow">#ff9807</color>
+    <color name="White">#FFFFFF</color>
 </resources>

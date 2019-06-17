@@ -18,6 +18,11 @@
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_events"
             android:title="Enquiries" />
+        <item
+            android:id="@+id/nav_notes"
+            android:icon="@drawable/ic_menu_events"
+            android:title="Notes" />
+
     </group>
 
     <item android:title="User Session">
