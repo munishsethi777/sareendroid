@@ -84,4 +84,8 @@
         <item name="android:textColor">@android:color/black</item>
     </style>
 
+    <style name="ButtonYellow" parent="@android:style/Widget.Button">
+        <item name="android:background">@color/button_yellow</item>
+    </style>
+
 </resources>

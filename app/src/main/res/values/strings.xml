@@ -31,6 +31,9 @@
     <string name="title_activity_enquiry_list">Enquiry List</string>
     <string name="title_activity_enquiry_details">Enquiry Details</string>
     <string name="title_activity_enquiry_filter">Enquiry Filter</string>
+    <string name="title_activity_notes">Notes</string>
+    <string name="title_activity_notes_editor">Note Editor</string>
     <string name="error_confirm_password_match">Confirm Password should match with new password</string>
     <string name="title_activity_change_password">ChangePassword</string>
+    <string name="noteSeq">noteSeq</string>
 </resources>

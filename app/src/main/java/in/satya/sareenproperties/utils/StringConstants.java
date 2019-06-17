@@ -13,6 +13,7 @@ public class StringConstants {
     public static final String WEB_URL = "http://www.sareenproperties.com/software/";
     public static final String PREFS_NAME = "LoginAuth";
     public static final String LOGGED_IN_ADMIN_SEQ = "loggedInAdminSeq";
+    public static final String NOTE_SEQ = "noteSeq";
     //User Actions
     //API URL STRINGS
     public static final String ACTION_API_URL = "http://www.sareenproperties.com/software/Actions/";
@@ -28,5 +29,11 @@ public class StringConstants {
     public static final String GET_ENQUIRIES  = ACTION_API_URL + "EnquiryAction.php?call=getEnquiries&ismobile=1&sortdatafield=lastmodifiedon&sortorder=desc";
     public static final String GET_ENQUIRY_DETAIL = ACTION_API_URL + "EnquiryAction.php?call=getEnquiryDetails&ismobile=1&id={0}";
     public static final String DELETE_ENQUIRY  = ACTION_API_URL + "EnquiryAction.php?call=deleteEnquiry&ismobile=1&ids={0}";
+
+    //NOTE ACTION
+    public static final String GET_ALL_NOTES = ACTION_API_URL + "NoteAction.php?call=getAllNotes&ismobile=1";
+    public static final String DELETE_NOTE = ACTION_API_URL + "NoteAction.php?call=deleteNotes&ids={0,number,#}&ismobile=1";
+    public static final String GET_NOTES_DETAILS = ACTION_API_URL + "NoteAction.php?call=getNoteDetails&&noteSeq={0,number,#}&ismobile=1";
+    public static final String SAVE_NOTES_DETAILS = ACTION_API_URL + "NoteAction.php?call=saveNote&adminseq={0,number,#}&seq={1,number,#}&detail={2}&ismobile=1";
 
 }
